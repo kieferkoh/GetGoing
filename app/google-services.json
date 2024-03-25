@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "988139835820",
+    "project_id": "getgoing-d615c",
+    "storage_bucket": "getgoing-d615c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988139835820:android:5394453ea5681cf0c62a09",
+        "android_client_info": {
+          "package_name": "com.example.getgoing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqaDQLXCm5P0NbffDmN78mcRYVoCk5BAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

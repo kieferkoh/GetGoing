@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".MainScreen">
+
+    <TextView
+        android:id="@+id/dlASK"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="What would you like to do today?"
+        android:textSize="38sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="100dp"
+    >
+
+    <TextView
+        android:id="@+id/friend"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:text="View Friends"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="40dp"
+
+        />
+
+
+    <TextView
+        android:id="@+id/group"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:text="View Groups"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
+
+        <ImageButton
+            android:id="@+id/friendPageBut"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/friend"
+            android:layout_marginStart="55dp"
+
+            />
+
+
+        <ImageButton
+            android:id="@+id/groupPageBut"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/group"
+            android:layout_marginStart="65dp"
+
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/g4"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="300dp"
+
+        />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+

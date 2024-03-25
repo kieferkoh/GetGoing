@@ -1,0 +1,24 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:background="#75E1E3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Search bar widget -->
+
+    <SearchView
+        android:layout_marginTop="50dp"
+        android:id="@+id/search_bar_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Enter activity..." />
+
+    <!-- List of nearby places (e.g. RecyclerView or ListView) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/nearby_places_list"
+        android:layout_width="match_parent"
+        android:layout_height="409dp"
+        android:layout_below="@id/search_bar_location" />
+
+</RelativeLayout>
