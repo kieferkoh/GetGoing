@@ -5,6 +5,7 @@ class User {
     var phone: String? = null
     var password: String? = null
     var friends: ArrayList<String>? = null
+    var groups : ArrayList<String>? = null
     var location: String? = null
 
     constructor() {}
@@ -21,5 +22,6 @@ class User {
         this.password = password
         this.friends = friends
         this.location = location
+        this.groups= null
     }
 }
