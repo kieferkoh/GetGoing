@@ -1,5 +1,6 @@
 package com.example.getgoing
 
+import User
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.widget.Button
@@ -75,7 +76,7 @@ class LogIn : AppCompatActivity() {
                                 currentUser.phone = phone.toString()
                             } else {
                                 currentUser =
-                                    User(null, phone.toString(), password.toString())
+                                    User("", phone.toString(), password.toString())
                             }
                             val intent = Intent(this@LogIn, MainScreen::class.java)
                             finish()
