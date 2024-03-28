@@ -1,6 +1,5 @@
 package com.example.getgoing
 
-import User
 import com.example.getgoing.DatabaseManager.updateDataInFirebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,6 +19,10 @@ object CurrentUserManager {
 
     fun getCurrentUser(): User? {
         return currentUser
+    }
+
+    suspend fun getUserWithReferenceAndPhone(phone: String): User?{
+        return DatabaseManager.fetchUserInfoFromFirebase(mDbRef.child("User").child(phone))
     }
 
 
@@ -44,13 +47,13 @@ object CurrentUserManager {
         return getUserByPhone(phone)?.name
     }
 
-    suspend fun addFriend(phone: String) : Boolean {
-        val friend = getUserByPhone(phone) ?: return false
-        val successUpdate = updateDataInFirebase(mDbRef, User::class.java) { user ->
-            user.friends?.add(friend.phone)
-        }
-        return successUpdate
-    }
+//    suspend fun addFriend(phone: String) : Boolean {
+//        val friend = getUserByPhone(phone) ?: return false
+//        val successUpdate = updateDataInFirebase(mDbRef, User::class.java) { user ->
+//            user.friends?.add(friend.phone)
+//        }
+//        return successUpdate
+//    }
 
 
 

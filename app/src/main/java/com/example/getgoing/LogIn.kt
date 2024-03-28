@@ -1,6 +1,6 @@
 package com.example.getgoing
 
-import User
+
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.widget.Button
@@ -70,8 +70,7 @@ class LogIn : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (phone.toString() == currentUser?.phone.toString()) {
                         if (password == currentUser?.password) {
-                            var
-                                    currentUser = CurrentUserManager.getCurrentUser()
+                            var currentUser = CurrentUserManager.getCurrentUser()
                             if (currentUser != null) {
                                 currentUser.phone = phone.toString()
                             } else {

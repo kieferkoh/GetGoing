@@ -1,6 +1,6 @@
 package com.example.getgoing
 
-import User
+
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await

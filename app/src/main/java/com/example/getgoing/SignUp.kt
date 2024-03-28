@@ -1,6 +1,6 @@
 package com.example.getgoing
 
-import User
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -100,8 +100,9 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun addUserToDatabase(name: String, phone: String, password: String){
-        CurrentUserManager.setCurrentUser(User("name",phone,"pass"))
-        mDbRef.child("User").child(phone).setValue(User(name,phone,password))
+        val newUser = User(name,phone,password)
+        CurrentUserManager.setCurrentUser(newUser)
+        mDbRef.child("User").child(phone).setValue(newUser)
     }
 
 
