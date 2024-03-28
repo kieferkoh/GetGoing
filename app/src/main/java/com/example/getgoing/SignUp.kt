@@ -99,13 +99,11 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun addUserToDatabase(name: String, phone: String, password: String){
-        CurrentUser.user = User(name,phone,password, null, null, null)
-        mDbRef.child("User").child(phone).setValue(User(name,phone,password, null, null,null))
+        CurrentUserManager.setCurrentUser(User("name",phone,"pass"))
+        mDbRef.child("User").child(phone).setValue(User(name,phone,password))
     }
 
-    object CurrentUser {
-        var user: User? = null
-    }
+
 
 
 }

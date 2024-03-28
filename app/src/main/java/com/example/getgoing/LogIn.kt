@@ -69,6 +69,14 @@ class LogIn : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (phone.toString() == currentUser?.phone.toString()) {
                         if (password == currentUser?.password) {
+                            var
+                                    currentUser = CurrentUserManager.getCurrentUser()
+                            if (currentUser != null) {
+                                currentUser.phone = phone.toString()
+                            } else {
+                                currentUser =
+                                    User(null, phone.toString(), password.toString())
+                            }
                             val intent = Intent(this@LogIn, MainScreen::class.java)
                             finish()
                             startActivity(intent)

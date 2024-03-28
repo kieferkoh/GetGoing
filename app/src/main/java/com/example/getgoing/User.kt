@@ -14,17 +14,14 @@ class User {
     constructor(
         name: String?,
         phone: String?,
-        password: String?,
-        friends: ArrayList<String>?,
-        friendreqs: ArrayList<String>?,
-        location: String?
+        password: String?
     ) {
         this.name = name
         this.phone = phone
         this.password = password
-        this.friends = friends
-        this.friendreqs = friendreqs
-        this.location = location
-        this.groups= null
+        this.friends = arrayListOf("")
+        this.friendreqs = arrayListOf("")
+        this.location = ""
+        this.groups= arrayListOf("")
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
 
 class CreateGroupName : AppCompatActivity() {
@@ -27,6 +28,7 @@ class CreateGroupName : AppCompatActivity() {
         backBtn = findViewById<ImageButton>(R.id.backToGroupsPage)
         edtGroupName = findViewById(R.id.edt_create_group_name)
         btnGroupCreate = findViewById(R.id.nextToCreateGroupFriends)
+        mDbRef = FirebaseDatabase.getInstance().getReference()
 
 
 
@@ -38,23 +40,32 @@ class CreateGroupName : AppCompatActivity() {
         }
 
         btnGroupCreate.setOnClickListener {
-            if(edtGroupName.text.toString()==""){
+            if (edtGroupName.text.toString() == "") {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
+                var user_test = CurrentUserManager.getCurrentUser()
                 addGroupToDatabase(edtGroupName.text.toString())
-                val intent = Intent(this, CreateGroupFriends::class.java)
-                finish()
-                startActivity(intent)
+                val name_of = CurrentUserManager.getName(user_test!!.phone.toString())
+                    ?: "Name not found"
+                Toast.makeText(this, "" + name_of, Toast.LENGTH_SHORT).show()
+//                val intent = Intent(this, CreateGroupFriends::class.java)
+//                finish()
+//                startActivity(intent)
             }
         }
 
     }
 
     private fun addGroupToDatabase(name: String?) {
-        val currentUser = SignUp.CurrentUser.user
-        val gid = UUID.randomUUID().toString()
-        mDbRef.child("Groups").child(gid).setValue(Group(name, arrayListOf(currentUser!!.phone.toString()), gid))
+        var currentUser = CurrentUserManager.getCurrentUser()
+        if (currentUser != null) {
+            val gid = UUID.randomUUID().toString()
+            mDbRef.child("Groups").child(gid)
+                .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
+        } else {
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
