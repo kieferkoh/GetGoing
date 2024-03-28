@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LogIn : AppCompatActivity() {
 
@@ -70,16 +73,20 @@ class LogIn : AppCompatActivity() {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (phone.toString() == currentUser?.phone.toString()) {
                         if (password == currentUser?.password) {
-                            var currentUser = CurrentUserManager.getCurrentUser()
+                            CoroutineScope(Dispatchers.Main).launch {
+                                // Call the suspend function within the coroutine scope
+                                var myUser = CurrentUserManager.getUserByPhone(phone)
+                                CurrentUserManager.setCurrentUser(myUser)
+                                if(myUser!=null){
+                                    val intent = Intent(this@LogIn, MainScreen::class.java)
+                                    finish()
+                                    startActivity(intent)}
+
+                            }
                             if (currentUser != null) {
                                 currentUser.phone = phone.toString()
-                            } else {
-                                currentUser =
-                                    User("", phone.toString(), password.toString())
                             }
-                            val intent = Intent(this@LogIn, MainScreen::class.java)
-                            finish()
-                            startActivity(intent)
+
                         }
                     }
                 }

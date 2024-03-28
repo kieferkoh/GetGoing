@@ -62,7 +62,7 @@ class CreateGroupName : AppCompatActivity() {
             mDbRef.child("Groups").child(gid)
                 .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
             mDbRef.child("User").child(currentUser.phone.toString()).child("groups")
-                .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
+                .setValue(arrayListOf(gid))
         } else {
             Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
         }
