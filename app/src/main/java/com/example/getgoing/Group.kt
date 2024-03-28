@@ -1,22 +1,37 @@
 package com.example.getgoing
 
+import java.util.UUID
+
 class Group {
     var name: String? = null
     var groupID: String? = null
-    var members : ArrayList<String>? = null
+    var members: ArrayList<String>? = null
     var chat: ArrayList<Message>? = null
 
     constructor() {}
 
     constructor(
         name: String?,
-        groupID: String?,
-        members : ArrayList<String>?,
-        chat: ArrayList<Message>?
+        members: ArrayList<String>?,
+        groupID: String?
     ) {
         this.name = name
-        this.groupID = groupID
         this.members = members
-        this.chat = chat
+        this.groupID = groupID
+
+        this.chat = ArrayList<Message>()
     }
+
+    fun addMember(friendPhone: String?) {
+        if (members == null) {
+            members = ArrayList()
+        }
+        friendPhone?.let {
+            members?.add(it)
+        }
+    }
+    fun setGroupName(name: String?){
+        this.name = name
+    }
+
 }

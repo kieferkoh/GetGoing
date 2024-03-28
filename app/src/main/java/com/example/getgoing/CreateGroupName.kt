@@ -2,22 +2,60 @@ package com.example.getgoing
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DatabaseReference
+import java.util.UUID
 
 class CreateGroupName : AppCompatActivity() {
+
+    private lateinit var edtGroupName: EditText
+    private lateinit var btnGroupCreate: Button
+    private lateinit var backBtn: ImageButton
+
+    private lateinit var mDbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_create_group_name)
 
-        val backBtn = findViewById<ImageButton>(R.id.backToGroupsPage)
+        backBtn = findViewById<ImageButton>(R.id.backToGroupsPage)
+        edtGroupName = findViewById(R.id.edt_create_group_name)
+        btnGroupCreate = findViewById(R.id.nextToCreateGroupFriends)
+
+
+
         backBtn.setOnClickListener {
             val intent = Intent(this, GroupsPage::class.java)
-            startActivity(intent)
             finish()
+            startActivity(intent)
+
         }
 
-    }}
+        btnGroupCreate.setOnClickListener {
+            if(edtGroupName.text.toString()==""){
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else {
+                addGroupToDatabase(edtGroupName.text.toString())
+                val intent = Intent(this, CreateGroupFriends::class.java)
+                finish()
+                startActivity(intent)
+            }
+        }
+
+    }
+
+    private fun addGroupToDatabase(name: String?) {
+        val currentUser = SignUp.CurrentUser.user
+        val gid = UUID.randomUUID().toString()
+        mDbRef.child("Groups").child(gid).setValue(Group(name, arrayListOf(currentUser!!.phone.toString()), gid))
+    }
+
+
+}

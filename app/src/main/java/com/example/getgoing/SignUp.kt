@@ -27,6 +27,8 @@ class SignUp : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -57,8 +59,6 @@ class SignUp : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
-
             signup(name, phone, password)
         }
 
@@ -83,6 +83,7 @@ class SignUp : AppCompatActivity() {
                     //Toast.makeText(this@SignUp, "User Exists", Toast.LENGTH_SHORT).show()
                     }
                 else {
+
                     addUserToDatabase(name, phone, password)
                     val intent = Intent(this@SignUp, MainScreen::class.java)
                     finish()
@@ -96,9 +97,16 @@ class SignUp : AppCompatActivity() {
             }
         })
     }
-    private fun addUserToDatabase(name: String, phone: String, password: String){
-        mDbRef.child("User").child(phone).setValue(User(name,phone,password,null,null))
 
+    private fun addUserToDatabase(name: String, phone: String, password: String){
+        CurrentUser.user = User(name,phone,password, null,null)
+        mDbRef.child("User").child(phone).setValue(User(name,phone,password, null,null))
     }
+
+    object CurrentUser {
+        var user: User? = null
+    }
+
+
 }
 
