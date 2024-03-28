@@ -5,6 +5,7 @@ import java.util.UUID
 class Group {
     var name: String? = null
     var groupID: String? = null
+    var image: Int? = null
     var members: ArrayList<String>? = null
     var chat: ArrayList<Message>? = null
 
@@ -18,7 +19,7 @@ class Group {
         this.name = name
         this.members = members
         this.groupID = groupID
-
+        this.image = null
         this.chat = ArrayList<Message>()
     }
 
@@ -32,6 +33,9 @@ class Group {
     }
     fun setGroupName(name: String?){
         this.name = name
+    }
+    fun setGroupImage(image: Int?){
+        // TODO:
     }
 
 }

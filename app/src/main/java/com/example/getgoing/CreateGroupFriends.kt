@@ -30,14 +30,14 @@ class CreateGroupFriends : AppCompatActivity() {
 
         val doneBtn = findViewById<Button>(R.id.doneToGroupsPage)
         doneBtn.setOnClickListener {
-            val intent = Intent(this, FriendRequest::class.java)
+            val intent = Intent(this, GroupDisplay::class.java)
             startActivity(intent)
             finish()
         }
 
         val backBtn = findViewById<Button>(R.id.cancelToGroupsPage)
         backBtn.setOnClickListener {
-            val intent = Intent(this, FriendsPage::class.java)
+            val intent = Intent(this, CreateGroupName::class.java)
             startActivity(intent)
             finish()
         }

@@ -30,7 +30,7 @@ class FriendsAdd : AppCompatActivity() {
         addBtn.setOnClickListener {
             // if editText ID not in database, reject
             // else add friend
-            sendFriendRequest(editText.toString(), SignUp.CurrentUser.user?.phone)
+            sendFriendRequest(editText.toString(), CurrentUserManager.getCurrentUser()!!.phone)
         }
 
         }

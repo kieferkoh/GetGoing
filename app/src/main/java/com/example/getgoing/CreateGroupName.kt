@@ -46,12 +46,10 @@ class CreateGroupName : AppCompatActivity() {
             } else {
                 var user_test = CurrentUserManager.getCurrentUser()
                 addGroupToDatabase(edtGroupName.text.toString())
-                val name_of = CurrentUserManager.getName(user_test!!.phone.toString())
-                    ?: "Name not found"
-                Toast.makeText(this, "" + name_of, Toast.LENGTH_SHORT).show()
-//                val intent = Intent(this, CreateGroupFriends::class.java)
-//                finish()
-//                startActivity(intent)
+
+                val intent = Intent(this, CreateGroupFriends::class.java)
+                finish()
+                startActivity(intent)
             }
         }
 
@@ -62,6 +60,8 @@ class CreateGroupName : AppCompatActivity() {
         if (currentUser != null) {
             val gid = UUID.randomUUID().toString()
             mDbRef.child("Groups").child(gid)
+                .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
+            mDbRef.child("User").child(currentUser.phone.toString()).child("groups")
                 .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
         } else {
             Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
