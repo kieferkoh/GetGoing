@@ -57,6 +57,9 @@
         <activity
             android:name=".GroupsPage"
             android:exported="false" />
+        <activity
+            android:name=".FriendsAdd"
+            android:exported="false" />
     </application>
 
 </manifest>

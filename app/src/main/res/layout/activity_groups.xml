@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#75E1E3"
-    tools:context=".MainActivity">
+    tools:context=".GroupsPage">
 
     <ImageButton
         android:id="@+id/backToMainScreen"

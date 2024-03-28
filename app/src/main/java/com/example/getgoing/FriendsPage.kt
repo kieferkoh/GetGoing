@@ -22,12 +22,12 @@ class FriendsPage : AppCompatActivity() {
             finish()
         }
 
-//        val addBtn = findViewById<ImageButton>(R.id.goToAddFriend)
-//        addBtn.setOnClickListener {
-//            val intent = Intent(this, ::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
+        val addBtn = findViewById<ImageButton>(R.id.goToAddFriend)
+        addBtn.setOnClickListener {
+            val intent = Intent(this, FriendsAdd::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val viewBtn = findViewById<ImageButton>(R.id.goToFriendList)
         viewBtn.setOnClickListener {

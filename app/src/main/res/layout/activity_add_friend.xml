@@ -42,17 +42,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addFriendButton"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_marginTop="84dp"
         android:text="Add Friend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/friendnumber" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/friendnumber"
         android:layout_width="200dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
