@@ -1,5 +1,7 @@
 package com.example.getgoing
 
+import User
+import com.example.getgoing.DatabaseManager.updateDataInFirebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -18,19 +20,6 @@ object CurrentUserManager {
 
     fun getCurrentUser(): User? {
         return currentUser
-    }
-    fun getUserByPhone(phone: String, callback: (User?) -> Unit) {
-        mDbRef.child("User").child(phone)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    callback(user)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    callback(null)
-                }
-            })
     }
 
 
@@ -54,6 +43,16 @@ object CurrentUserManager {
     suspend fun getName(phone: String): String? {
         return getUserByPhone(phone)?.name
     }
+
+    suspend fun addFriend(phone: String) : Boolean {
+        val friend = getUserByPhone(phone) ?: return false
+        val successUpdate = updateDataInFirebase(mDbRef, User::class.java) { user ->
+            user.friends?.add(friend.phone)
+        }
+        return successUpdate
+    }
+
+
 
 
 }
