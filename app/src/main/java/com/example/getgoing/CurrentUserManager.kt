@@ -33,17 +33,27 @@ object CurrentUserManager {
             })
     }
 
-    fun getFriendList(phone: String): DatabaseReference {
 
-        return (mDbRef.child("User").child(phone).child("friends"))
+    suspend fun getFriendList(user: String): ArrayList<String> {
+        return DatabaseManager.fetchDataListFromFirebase(
+            mDbRef.child("User").child(user).child("friends"), String::class.java
+        )
     }
 
-    fun getGroupList(phone: String): DatabaseReference {
-        return (mDbRef.child("User").child(phone).child("groups"))
+    suspend fun getGroupList(user: String): ArrayList<Group> {
+        return DatabaseManager.fetchDataListFromFirebase(
+            mDbRef.child("User").child(user).child("groups"), Group::class.java
+        )
     }
 
-    fun getName(phone: String): DatabaseReference {
-        return (mDbRef.child("User").child(phone).child("name"))
+    suspend fun getUserByPhone(phone: String): User? {
+        return DatabaseManager.fetchDataFromFirebase(
+            mDbRef.child("User").child(phone), User::class.java
+        )
     }
+    suspend fun getName(phone: String): String? {
+        return getUserByPhone(phone)?.name
+    }
+
 
 }
