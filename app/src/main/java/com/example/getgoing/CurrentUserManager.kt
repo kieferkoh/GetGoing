@@ -38,12 +38,16 @@ object CurrentUserManager {
         return (mDbRef.child("User").child(phone).child("friends"))
     }
 
+    fun addFriend(phone: String){
+
+    }
+
     fun getGroupList(phone: String): DatabaseReference {
         return (mDbRef.child("User").child(phone).child("groups"))
     }
 
-    fun getName(phone: String): DatabaseReference {
-        return (mDbRef.child("User").child(phone).child("name"))
+    fun getName(phone: String): String {
+        return (mDbRef.child("User").child(phone).child("name").toString())
     }
 
 }
