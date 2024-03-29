@@ -48,9 +48,9 @@ class CreateGroupFriends : AppCompatActivity() {
         FriendEntry.adapter = FriendListAdapter
 
         // on below line we are adding data to our list
-        FriendList.add(Friend("Bob", R.drawable.bob))
-        FriendList.add(Friend("Roy", R.drawable.roy))
-        FriendList.add(Friend("Tino", R.drawable.tino))
+//        FriendList.add(Friend("Bob", R.drawable.bob))
+//        FriendList.add(Friend("Roy", R.drawable.roy))
+//        FriendList.add(Friend("Tino", R.drawable.tino))
 
 
         searchView = findViewById(R.id.idSV)
