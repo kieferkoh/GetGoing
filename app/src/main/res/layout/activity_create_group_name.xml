@@ -40,7 +40,7 @@
         />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/edt_create_group_name"
         android:layout_width="343dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"

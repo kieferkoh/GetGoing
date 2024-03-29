@@ -63,7 +63,7 @@
             android:layout_height="120dp"
             android:src="@drawable/friend"
             android:layout_marginStart="55dp"
-            android:background=""
+            android:background="@color/white"
             android:scaleType="fitCenter"
             />
 
@@ -74,7 +74,7 @@
             android:layout_height="120dp"
             android:src="@drawable/group"
             android:layout_marginStart="65dp"
-            android:background=""
+            android:background="@color/white"
             android:scaleType="fitCenter"
             />
 

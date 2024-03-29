@@ -31,17 +31,17 @@
         />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/inputFriendName"
+        android:id="@+id/friendnumber"
         android:layout_width="300dp"
         android:layout_height="120dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="60dp"
-        android:hint= "Enter User Name"
+        android:hint= "Enter Phone number"
         android:textSize="20sp"
         />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addFriendButton"
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:layout_marginTop="70dp"
