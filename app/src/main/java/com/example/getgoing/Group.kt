@@ -19,8 +19,8 @@ class Group {
         this.name = name
         this.members = members
         this.groupID = groupID
-        this.image = null
-        this.chat = ArrayList<Message>()
+        this.image = 0
+        this.chat = arrayListOf(Message("test","id"))
     }
 
     fun addMember(friendPhone: String?) {
