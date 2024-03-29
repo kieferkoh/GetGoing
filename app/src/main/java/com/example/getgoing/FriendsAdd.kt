@@ -32,7 +32,7 @@ class FriendsAdd : AppCompatActivity() {
             finish()
         }
 
-        val editText = findViewById<TextInputEditText>(R.id.friendnumber)
+        val editText = findViewById<TextInputEditText>(R.id.friendnumber) // need to create textcheck
         val addBtn = findViewById<Button>(R.id.addFriendButton)
         addBtn.setOnClickListener {
         CoroutineScope(Dispatchers.Main).launch {

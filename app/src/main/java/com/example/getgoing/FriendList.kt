@@ -47,6 +47,16 @@ class FriendList : AppCompatActivity() {
             finish()
         }
 
+        val removeBtn = findViewById<Button>(R.id.friendlist_removebutton)
+        removeBtn.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                FriendListAdapter.getCheckedFriends().forEach {
+                    CurrentUserManager.removeFriend(it.phone)
+                }
+
+            }
+        }
+
         CoroutineScope(Dispatchers.Main).launch {
             FriendEntry = findViewById(R.id.recyclableListFriends)
             FriendList = ArrayList()
@@ -54,7 +64,7 @@ class FriendList : AppCompatActivity() {
             FriendEntry.adapter = FriendListAdapter
             CurrentUserManager.currentUser?.let { it ->
                 FriendManager.getFriends(it).forEach {
-                    FriendList.add(Friend(it.name!!, it.image!!))
+                    FriendList.add(Friend(it.name!!, it.image!!, it.phone!!))
                 }
             }
             FriendListAdapter.notifyDataSetChanged()
@@ -122,9 +132,4 @@ class FriendList : AppCompatActivity() {
         }
     }
 
-    private fun deleteFriend(friend: Friend){
-        FriendList.remove(friend)
-        FriendListAdapter.notifyDataSetChanged()
-        // Remove friend from friend list to database
-    }
 }
