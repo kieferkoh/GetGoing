@@ -101,7 +101,7 @@ class SignUp : AppCompatActivity() {
 
     private fun addUserToDatabase(name: String, phone: String, password: String){
         val newUser = User(name,phone,password)
-        CurrentUserManager.setCurrentUser(newUser)
+        CurrentUserManager.currentUser = newUser
         mDbRef.child("User").child(phone).setValue(newUser)
     }
 

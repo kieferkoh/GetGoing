@@ -5,13 +5,20 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FriendsAdd : AppCompatActivity() {
+    private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,12 +35,14 @@ class FriendsAdd : AppCompatActivity() {
         val editText = findViewById<TextInputEditText>(R.id.friendnumber)
         val addBtn = findViewById<Button>(R.id.addFriendButton)
         addBtn.setOnClickListener {
-            // if editText ID not in database, reject
-            // else add friend
-            sendFriendRequest(editText.toString(), CurrentUserManager.getCurrentUser()!!.phone)
+        CoroutineScope(Dispatchers.Main).launch {
+                sendFriendRequest(editText.text.toString())
+            }
         }
-
         }
-    fun sendFriendRequest(friendID: String?, currentUserID: String?) {
-        // Add request to friendID in database
+    private suspend fun sendFriendRequest(phone: String?) {
+        if (phone != null) {
+            Toast.makeText(this, "Friend request sent to $phone", Toast.LENGTH_SHORT).show()
+            CurrentUserManager.sendFriendReq(phone)
+        }
     }}

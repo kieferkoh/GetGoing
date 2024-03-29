@@ -44,7 +44,7 @@ class CreateGroupName : AppCompatActivity() {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
-                var user_test = CurrentUserManager.getCurrentUser()
+                var user_test = CurrentUserManager.currentUser
                 addGroupToDatabase(edtGroupName.text.toString())
 
                 val intent = Intent(this, CreateGroupFriends::class.java)
@@ -56,7 +56,7 @@ class CreateGroupName : AppCompatActivity() {
     }
 
     private fun addGroupToDatabase(name: String?) {
-        var currentUser = CurrentUserManager.getCurrentUser()
+        var currentUser = CurrentUserManager.currentUser
         if (currentUser != null) {
             val gid = UUID.randomUUID().toString()
             mDbRef.child("Groups").child(gid)

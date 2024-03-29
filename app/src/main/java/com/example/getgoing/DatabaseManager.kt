@@ -66,36 +66,36 @@ suspend fun fetchUserInfoFromFirebase(dbRef: DatabaseReference): User? {
         return dataSnapshot.getValue(clazz)
     }
 
-    suspend fun <T : Any> updateDataInFirebase(
-        dbRef: DatabaseReference,
-        clazz: Class<T>,
-        updateFunction: (T) -> Unit
-    )
-            : Boolean {
-        return try {
-            val existingData: T? = fetchDataFromFirebase(dbRef, clazz)
-            if (existingData != null) {
-                updateFunction(existingData)
-                dbRef.setValue(existingData).await()
-                return true
-            }
-            true
-        } catch (e: DatabaseException) {
-            false
+    suspend fun <T : Any> createOrUpdateListFirebase(data: T?, dbRef: DatabaseReference, clazz: Class<T>): Boolean {
+        var existingData : ArrayList<T> = fetchDataListFromFirebase(dbRef, clazz)
+        if (existingData.contains(data)){
+            return false
         }
+        if (existingData[0] != " "){
+            existingData.add(data!!)
+        }
+        else {
+            existingData = data?.let { arrayListOf(it) }!!
+        }
+        dbRef.setValue(existingData).await()
+        return true
     }
 
-    suspend fun <T : Any> createDataInFirebase(
-        dbRef: DatabaseReference,
-        userId: String,
-        data: T
-    ): Boolean {
-        try {
-            dbRef.child(userId).setValue(data).await()
-            return true
-        } catch (e: Exception) {
-            // Handle errors
+
+    suspend fun <T : Any> removeDataFromListFirebase(data: T?, dbRef: DatabaseReference, clazz: Class<T>): Boolean {
+        var existingData : ArrayList<T> = fetchDataListFromFirebase(dbRef, clazz)
+        if (!existingData.contains(data)){
+            return false
         }
-        return false
+        if (existingData.all { it is String}){
+            val stringDataList = existingData as ArrayList<String>
+            val stringData = data as? String
+            stringDataList.remove(stringData)
+            if (stringDataList.isEmpty()){
+                stringDataList.add(" ")
+            }
+            dbRef.setValue(stringDataList).await()
+        }
+        return true
     }
 }

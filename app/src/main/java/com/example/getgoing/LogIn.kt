@@ -76,7 +76,7 @@ class LogIn : AppCompatActivity() {
                             CoroutineScope(Dispatchers.Main).launch {
                                 // Call the suspend function within the coroutine scope
                                 var myUser = CurrentUserManager.getUserByPhone(phone)
-                                CurrentUserManager.setCurrentUser(myUser)
+                                CurrentUserManager.currentUser = myUser
                                 if(myUser!=null){
                                     val intent = Intent(this@LogIn, MainScreen::class.java)
                                     finish()
