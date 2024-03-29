@@ -34,27 +34,22 @@ class GroupDisplay : AppCompatActivity() {
         val currentUser = CurrentUserManager.currentUser
         val currentPhone = currentUser!!.phone.toString()
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
-//        CoroutineScope(Dispatchers.Main).launch {
-//            // Call the suspend function within the coroutine scope
-//            groupList = CurrentUserManager.getGroupList(currentPhone)
-//
-//            // Update UI or perform further operations here with groupList
-//        }
+        CoroutineScope(Dispatchers.Main).launch {
+            // Call the suspend function within the coroutine scope
+            var groupIDs = CurrentUserManager.getGroupList(currentPhone)
+            groupList = ArrayList()
+            groupList = GroupManager.getGroups(groupIDs)
+            GroupDisplayAdapter = GroupDisplayAdapter(groupList)
+            groupChatRecyclerView.adapter = GroupDisplayAdapter
+            groupChatRecyclerView.layoutManager = LinearLayoutManager(this@GroupDisplay)
 
-        groupList = ArrayList()
-        groupList.add(Group(
-            "test_group",
-            "232ddf1e-49da-40f1-b91b-e12c05b6beda",
-            R.drawable.bob,
-            arrayListOf("979797", "989898"),
-            arrayListOf(Message("test", "989898"), Message("test2", "979797"))
-        ))
-        GroupDisplayAdapter = GroupDisplayAdapter(groupList)
-        groupChatRecyclerView.adapter = GroupDisplayAdapter
-        groupChatRecyclerView.layoutManager = LinearLayoutManager(this)
-//        newRecyclerview.setHasFixedSize(true)
+            GroupDisplayAdapter.notifyDataSetChanged()
 
-        GroupDisplayAdapter.notifyDataSetChanged()
+            // Update UI or perform further operations here with groupList
+        }
+
+
+
 
 
 

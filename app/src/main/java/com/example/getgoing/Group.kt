@@ -32,7 +32,7 @@ class Group {
         this.name = name
         this.members = members
         this.groupID = groupID
-        this.image = 0
+        this.image = R.drawable.roy
         this.chat = arrayListOf(Message("test","989898"))
     }
 

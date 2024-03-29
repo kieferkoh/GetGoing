@@ -6,7 +6,7 @@ import java.util.UUID
 
 object GroupManager {
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-
+    var currentGroup: Group? = null
     suspend fun createGroup(name: String, members: ArrayList<String>) : Boolean {
         val gid = UUID.randomUUID().toString()
         val dbRefGrp = mDbRef.child("Groups").child(gid)
@@ -33,13 +33,13 @@ object GroupManager {
         return true
     }
 
-    suspend fun getGroups(gidList: ArrayList<String>) : Boolean {
+    suspend fun getGroups(gidList: ArrayList<String>) : ArrayList<Group> {
         val dbRefGrp = mDbRef.child("Groups")
         val groupList: ArrayList<Group> = arrayListOf()
         gidList.forEach {
             DatabaseManager.fetchDataFromFirebase(dbRefGrp.child(it), Group::class.java)
                 ?.let { group -> groupList.add(group) }
         }
-        return true
+        return groupList
     }
 }

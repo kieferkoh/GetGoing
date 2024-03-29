@@ -42,18 +42,16 @@ class   MessageAdapter(val context: Context, val messageList: ArrayList<Message>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentMessage = messageList[position]
-        if (holder.javaClass == SentViewHolder::class.java) {
-            val viewHolder = holder as SentViewHolder
-            holder.sentMessage.text = currentMessage.message
+        if (currentMessage.senderId == CurrentUserManager.currentUser?.phone) {
+            (holder as? SentViewHolder)?.sentMessage?.text = currentMessage.message
         } else {
-            val viewHolder = holder as ReceiveViewHolder
-            holder.receiveMessage.text = currentMessage.message
+            (holder as? ReceiveViewHolder)?.receiveMessage?.text = currentMessage.message
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         val currentMessage = messageList[position]
-        if (FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)) {
+        if (CurrentUserManager.currentUser?.phone.equals(currentMessage.senderId)) {
             return ITEM_SENT
         } else {
             return ITEM_RECEIVE

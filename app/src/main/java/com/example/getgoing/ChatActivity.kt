@@ -28,8 +28,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<com.example.getgoing.Message>
     private lateinit var mDbRef: DatabaseReference
 
-    var receiverRoom: String? = null
-    var senderRoom: String? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,14 +36,11 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
 
         val intent = Intent()
-        val name = intent.getStringExtra("name")
-        val receiverUid = intent.getStringExtra("uid")
-        val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+        val name = GroupManager.currentGroup?.name
+        val senderUid = CurrentUserManager.currentUser?.phone
+        val groupChatID = GroupManager.currentGroup?.groupID
 
         mDbRef = FirebaseDatabase.getInstance().getReference()
-
-        senderRoom = receiverUid + senderUid
-        receiverRoom = senderUid + receiverUid
 
         supportActionBar?.title = name
 
@@ -56,10 +51,12 @@ class ChatActivity : AppCompatActivity() {
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
 
+
+
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
-        mDbRef.child("chats").child(senderRoom!!).child("messages")
+        mDbRef.child("Groups").child(groupChatID!!).child("chat")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messageList.clear()
@@ -79,11 +76,8 @@ class ChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()
             val messageObject = Message(message, senderUid)
-            mDbRef.child("chats").child(senderRoom!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
-                }
+            mDbRef.child("Groups").child(groupChatID).child("chat").push()
+                .setValue(messageObject)
             messageBox.setText("")
         }
 

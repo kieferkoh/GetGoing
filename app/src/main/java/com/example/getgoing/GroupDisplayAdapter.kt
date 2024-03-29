@@ -1,5 +1,6 @@
 package com.example.getgoing
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,19 @@ class GroupDisplayAdapter(
     // add filter for future
 
     override fun onBindViewHolder(holder: GroupChatViewHolder, position: Int) {
+        val context = holder.itemView.context
+        val currentGroup = GroupList[position]
+
         holder.groupNameTV.text = GroupList[position].name
         GroupList[position].image?.let { holder.groupIV.setImageResource(it) }
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, ChatActivity::class.java)
+            GroupManager.currentGroup = currentGroup
+            context.startActivity(intent)
+
+        }
+
     }
 
     override fun getItemCount(): Int {
