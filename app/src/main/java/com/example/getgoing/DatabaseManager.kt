@@ -81,6 +81,11 @@ suspend fun fetchUserInfoFromFirebase(dbRef: DatabaseReference): User? {
         return true
     }
 
+    suspend fun <T : Any> createDataFirebase(data: T?, dbRef: DatabaseReference): Boolean {
+        dbRef.setValue(data)
+        return true
+    }
+
 
     suspend fun <T : Any> removeDataFromListFirebase(data: T?, dbRef: DatabaseReference, clazz: Class<T>): Boolean {
         var existingData : ArrayList<T> = fetchDataListFromFirebase(dbRef, clazz)
