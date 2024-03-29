@@ -10,6 +10,7 @@ object GroupManager {
     suspend fun createGroup(name: String, members: ArrayList<String>) : Boolean {
         val gid = UUID.randomUUID().toString()
         val dbRefGrp = mDbRef.child("Groups").child(gid)
+        currentGroup = Group(name, members, gid)
         DatabaseManager.createDataFirebase(Group(name, members, gid), dbRefGrp)
         members.forEach {
             val dbRefMember = mDbRef.child("User").child(it).child("groups")

@@ -10,6 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class CreateGroupName : AppCompatActivity() {
@@ -58,11 +61,13 @@ class CreateGroupName : AppCompatActivity() {
     private fun addGroupToDatabase(name: String?) {
         var currentUser = CurrentUserManager.currentUser
         if (currentUser != null) {
-            val gid = UUID.randomUUID().toString()
-            mDbRef.child("Groups").child(gid)
-                .setValue(Group(name, arrayListOf(currentUser.phone.toString()), gid))
-            mDbRef.child("User").child(currentUser.phone.toString()).child("groups")
-                .setValue(arrayListOf(gid))
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (name != null) {
+                    GroupManager.createGroup(name, arrayListOf(currentUser.phone!!))
+
+                }
+            }
         } else {
             Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
         }
