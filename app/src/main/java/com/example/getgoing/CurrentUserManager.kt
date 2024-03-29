@@ -72,5 +72,10 @@ object CurrentUserManager {
         return (userRemove == true && friendRemove == true)
     }
 
+    suspend fun createGroup(name: String, members: ArrayList<String>) : Boolean {
+        members.add(currentUser?.phone!!)
+        return GroupManager.createGroup(name, members)
+    }
+
 
 }

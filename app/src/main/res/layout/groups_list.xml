@@ -10,10 +10,11 @@
     android:layout_marginVertical="10dp"
     app:cardElevation="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="390dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp">
+        android:orientation="horizontal"
+        android:layout_below="@+id/idTVHeading">
 
         <TextView
             android:id="@+id/GroupDisplay_name"
@@ -27,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/GroupDisplay_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -39,5 +40,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
