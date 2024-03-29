@@ -10,6 +10,19 @@ class Group {
     var chat: ArrayList<Message>? = null
 
     constructor() {}
+    constructor(
+        name: String?,
+        groupID: String?,
+        image: Int?,
+        members: ArrayList<String>?,
+        chat: ArrayList<Message>?
+    ) {
+        this.name = name
+        this.members = members
+        this.groupID = groupID
+        this.image = image
+        this.chat = chat
+    }
 
     constructor(
         name: String?,
@@ -20,7 +33,7 @@ class Group {
         this.members = members
         this.groupID = groupID
         this.image = 0
-        this.chat = arrayListOf(Message("test","id"))
+        this.chat = arrayListOf(Message("test","989898"))
     }
 
     fun addMember(friendPhone: String?) {

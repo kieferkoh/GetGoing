@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 
 class GroupDisplayAdapter(
-    private var GroupList: ArrayList<Group>,
+    var GroupList: ArrayList<Group>,
 ) : RecyclerView.Adapter<GroupDisplayAdapter.GroupChatViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupChatViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.groups_list,
-            parent, false
-        )
+            parent, false)
         return GroupChatViewHolder(itemView)
     }
     // add filter for future
@@ -31,8 +30,8 @@ class GroupDisplayAdapter(
 
 
     class GroupChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val groupNameTV: TextView = itemView.findViewById(R.id.GroupDisplay_image)
-        val groupIV: ImageView = itemView.findViewById(R.id.GroupDisplay_name)
+        val groupNameTV: TextView = itemView.findViewById(R.id.GroupDisplay_name)
+        val groupIV: ImageView = itemView.findViewById(R.id.GroupDisplay_image)
     }
 
 }

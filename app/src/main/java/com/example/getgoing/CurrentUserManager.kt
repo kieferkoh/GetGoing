@@ -27,9 +27,9 @@ object CurrentUserManager {
         )
     }
 
-    suspend fun getGroupList(user: String): ArrayList<Group> {
+    suspend fun getGroupList(user: String): ArrayList<String> {
         return DatabaseManager.fetchDataListFromFirebase(
-            mDbRef.child("User").child(user).child("groups"), Group::class.java
+            mDbRef.child("User").child(user).child("groups"), String::class.java
         )
     }
 
