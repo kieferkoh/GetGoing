@@ -7,5 +7,8 @@
     <color name="redd">#F4161D</color>
     <color name="green">#4CAF50</color>
     <color name="grey">#908686</color>
-    <color name="bluegreen">#00BCD4</color>
+    <color name="blueGreen">#00BCD4</color>
+    <color name="lightGreen">#9ED859</color>
+    <color name="lightBlue">#A2E3EC</color>
+
 </resources>

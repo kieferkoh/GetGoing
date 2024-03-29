@@ -1,67 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/background"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FriendsAdd"
+    >
+
 
     <ImageButton
         android:id="@+id/backToFriendPage"
         android:layout_width="40dp"
         android:layout_height="43dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/backarrow" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/baseline_arrow_back_ios_24"
+        />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:text="Add Friend"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
         android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Username"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1" />
-
-    <Button
-        android:id="@+id/addFriendButton"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="84dp"
-        android:text="Add Friend"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friendnumber" />
+        />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/friendnumber"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
+        android:id="@+id/inputFriendName"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
-        android:textSize="15sp"
-        android:padding="10dp"
-        android:layout_gravity="center_horizontal"
-        android:hint=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:layout_marginLeft="60dp"
+        android:hint= "Enter User Name"
+        android:textSize="20sp"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="70dp"
+        android:text="Add as Friend"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/lightGreen"
+        android:textColor="@color/grey"
+        />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/pale_logo"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="300dp"
+        />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
