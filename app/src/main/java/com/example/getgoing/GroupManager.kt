@@ -35,8 +35,10 @@ object GroupManager {
 
     suspend fun getGroups(gidList: ArrayList<String>) : Boolean {
         val dbRefGrp = mDbRef.child("Groups")
+        val groupList: ArrayList<Group> = arrayListOf()
         gidList.forEach {
             DatabaseManager.fetchDataFromFirebase(dbRefGrp.child(it), Group::class.java)
+                ?.let { group -> groupList.add(group) }
         }
         return true
     }
