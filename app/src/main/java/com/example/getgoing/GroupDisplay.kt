@@ -30,7 +30,7 @@ class GroupDisplay : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        val currentUser = CurrentUserManager.getCurrentUser()
+        val currentUser = CurrentUserManager.currentUser
         val currentPhone = currentUser!!.phone.toString()
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
         CoroutineScope(Dispatchers.Main).launch {

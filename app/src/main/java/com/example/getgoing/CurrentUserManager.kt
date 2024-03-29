@@ -1,6 +1,5 @@
 package com.example.getgoing
 
-import com.example.getgoing.DatabaseManager.updateDataInFirebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -11,21 +10,17 @@ object CurrentUserManager {
 
 
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    private var currentUser: User? = null
-
-    fun setCurrentUser(user: User?) {
-        currentUser = user
-    }
-
-    fun getCurrentUser(): User? {
-        return currentUser
-    }
+    var currentUser: User? = null
 
     suspend fun getUserWithReferenceAndPhone(phone: String): User?{
         return DatabaseManager.fetchUserInfoFromFirebase(mDbRef.child("User").child(phone))
     }
 
-
+    suspend fun getFriendReqs(user: String): ArrayList<String> {
+        return DatabaseManager.fetchDataListFromFirebase(
+            mDbRef.child("User").child(user).child("friendreqs"), String::class.java
+        )
+    }
     suspend fun getFriendList(user: String): ArrayList<String> {
         return DatabaseManager.fetchDataListFromFirebase(
             mDbRef.child("User").child(user).child("friends"), String::class.java
@@ -47,15 +42,35 @@ object CurrentUserManager {
         return getUserByPhone(phone)?.name
     }
 
-//    suspend fun addFriend(phone: String) : Boolean {
-//        val friend = getUserByPhone(phone) ?: return false
-//        val successUpdate = updateDataInFirebase(mDbRef, User::class.java) { user ->
-//            user.friends?.add(friend.phone)
-//        }
-//        return successUpdate
-//    }
+    suspend fun addFriend(phone: String) : Boolean {
+        val userAdded = currentUser?.let { FriendManager.addFriend(phone, it) }
+        val removeReq = currentUser?.let { FriendManager.removeFriendReq(phone, it)}
+        val friendAdded = getUserByPhone(phone)?.let { FriendManager.addFriend(currentUser?.phone!!, it)}
+        return (userAdded == true && removeReq == true && friendAdded == true)
+    }
 
+    suspend fun sendFriendReq(phone: String) : Boolean? {
+        if (phone == currentUser?.phone!!){
+            return false // Cannot add ownself
+        }
+        if (getFriendList(currentUser?.phone!!).contains(phone)){
+            return false // If already friend
+        }
+        if (getFriendReqs(currentUser?.phone!!).contains(phone)){
+            return addFriend(phone) // If friend has already sent friend request to current user
+        }
+        return currentUser?.let { FriendManager.sendFriendReq(phone, it) }
+    }
 
+    suspend fun rejectFriendReq(phone: String) : Boolean? {
+        return currentUser?.let { FriendManager.removeFriendReq(phone, it)}
+    }
+
+    suspend fun removeFriend(phone: String) : Boolean {
+        val userRemove = currentUser?.let { FriendManager.removeFriend(phone, it)}
+        val friendRemove = getUserByPhone(phone)?.let { FriendManager.removeFriend(currentUser?.phone!!, it)}
+        return (userRemove == true && friendRemove == true)
+    }
 
 
 }
