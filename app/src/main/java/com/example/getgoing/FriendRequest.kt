@@ -10,6 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FriendRequest : AppCompatActivity() {
 
@@ -32,28 +35,18 @@ class FriendRequest : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        // on below line we are initializing our views with their ids.
-        FriendEntry = findViewById(R.id.recyclableListFriends)
-
-        // on below line we are initializing our list
-        FriendList = ArrayList()
-
-        // on below line we are initializing our adapter
-        RemoveFrenAdapter = RemoveFriendAdapter(FriendList)
-
-        // on below line we are setting adapter to our recycler view.
-        FriendEntry.adapter = RemoveFrenAdapter
-
-        // on below line we are adding data to our list
-        FriendList.add(Friend("Android Development", R.drawable.egg_prata))
-        FriendList.add(Friend("C++ Development", R.drawable.harold_meme))
-        FriendList.add(Friend("Java Development", R.drawable.io))
-        FriendList.add(Friend("Python Development", R.drawable.egg_prata))
-        FriendList.add(Friend("JavaScript Development", R.drawable.harold_meme))
-
-        // on below line we are notifying adapter
-        // that data has been updated.
-        RemoveFrenAdapter.notifyDataSetChanged()
+        CoroutineScope(Dispatchers.Main).launch {
+            FriendEntry = findViewById(R.id.recyclableListFriends)
+            FriendList = ArrayList()
+            RemoveFrenAdapter = RemoveFriendAdapter(FriendList)
+            FriendEntry.adapter = RemoveFrenAdapter
+            CurrentUserManager.currentUser?.let {
+                FriendManager.getFriendsReq(it).forEach {
+                    FriendList.add(Friend(it.name!!, it.image!!))
+                }
+            }
+            RemoveFrenAdapter.notifyDataSetChanged()
+        }
     }
 
     // calling on create option menu

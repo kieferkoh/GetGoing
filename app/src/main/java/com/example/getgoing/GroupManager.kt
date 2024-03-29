@@ -17,10 +17,14 @@ object GroupManager {
         }
         return true
     }
+
+
     suspend fun addMembers(gid: String, members: ArrayList<String>) : Boolean {
         val dbRefGrp = mDbRef.child("Groups").child(gid).child("members")
         members.forEach {
+            val dbRefMember = mDbRef.child("User").child(it).child("groups")
             DatabaseManager.createOrUpdateListFirebase(it, dbRefGrp, String::class.java)
+            DatabaseManager.createOrUpdateListFirebase(gid, dbRefMember, String::class.java)
         }
         return true
     }
@@ -28,7 +32,9 @@ object GroupManager {
     suspend fun delMembers(gid: String, members: ArrayList<String>) : Boolean {
         val dbRefGrp = mDbRef.child("Groups").child(gid).child("members")
         members.forEach {
+            val dbRefMember = mDbRef.child("User").child(it).child("groups")
             DatabaseManager.removeDataFromListFirebase(it, dbRefGrp, String::class.java)
+            DatabaseManager.removeDataFromListFirebase(gid, dbRefMember, String::class.java)
         }
         return true
     }

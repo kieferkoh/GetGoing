@@ -11,7 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FriendList : AppCompatActivity() {
 
@@ -42,18 +47,18 @@ class FriendList : AppCompatActivity() {
             finish()
         }
 
-        FriendEntry = findViewById(R.id.recyclableListFriends)
-        FriendList = ArrayList()
-        FriendListAdapter = FriendListAdapter(FriendList)
-        FriendEntry.adapter = FriendListAdapter
-
-        // on below line we are adding data to our list
-        FriendList.add(Friend("Android Development", R.drawable.egg_prata))
-        FriendList.add(Friend("C++ Development", R.drawable.harold_meme))
-        FriendList.add(Friend("Java Development", R.drawable.io))
-        FriendList.add(Friend("Python Development", R.drawable.egg_prata))
-        FriendList.add(Friend("JavaScript Development", R.drawable.harold_meme))
-
+        CoroutineScope(Dispatchers.Main).launch {
+            FriendEntry = findViewById(R.id.recyclableListFriends)
+            FriendList = ArrayList()
+            FriendListAdapter = FriendListAdapter(FriendList)
+            FriendEntry.adapter = FriendListAdapter
+            CurrentUserManager.currentUser?.let { it ->
+                FriendManager.getFriends(it).forEach {
+                    FriendList.add(Friend(it.name!!, it.image!!))
+                }
+            }
+            FriendListAdapter.notifyDataSetChanged()
+        }
 
         searchView = findViewById(R.id.idSV)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -78,7 +83,6 @@ class FriendList : AppCompatActivity() {
                 return false
             }
         })
-        FriendListAdapter.notifyDataSetChanged()
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
