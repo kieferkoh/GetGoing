@@ -16,7 +16,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/baseline_arrow_back_ios_24"
-        />
+        android:translationY="5dp" />
 
     <TextView
         android:id="@+id/textView7"
@@ -85,6 +85,7 @@
         android:background="@drawable/pale_logo"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="300dp"
+
         />
 
 
