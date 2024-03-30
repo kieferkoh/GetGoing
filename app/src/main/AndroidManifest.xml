@@ -60,6 +60,7 @@
         <activity
             android:name=".FriendsAdd"
             android:exported="false" />
+        <activity android:name=".GroupEdit" />
     </application>
 
 </manifest>

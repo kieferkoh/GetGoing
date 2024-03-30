@@ -31,6 +31,7 @@ class GroupEdit : AppCompatActivity() {
 
         okBtn = findViewById<Button>(R.id.goToGroupProfile)
         edtChangeGroupName = findViewById(R.id.change_group_name)
+        mDbRef = FirebaseDatabase.getInstance().getReference()
 
 
 
@@ -43,6 +44,7 @@ class GroupEdit : AppCompatActivity() {
                 mDbRef.child("Groups").child(myGroup?.groupID!!).child("name")
                     .setValue(edtChangeGroupName.text.toString())
                 val intent = Intent(this, GroupProfile::class.java)
+                GroupManager.currentGroup?.name = edtChangeGroupName.text.toString()
                 startActivity(intent)
                 finish()
             }
