@@ -30,6 +30,7 @@ class GroupDisplayAdapter(
         holder.itemView.setOnClickListener{
             val intent = Intent(context, ChatActivity::class.java)
             GroupManager.currentGroup = currentGroup
+            intent.putExtra("group_id", currentGroup.groupID)
             context.startActivity(intent)
 
         }

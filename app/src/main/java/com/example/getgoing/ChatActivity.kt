@@ -3,6 +3,7 @@ package com.example.getgoing
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -41,6 +42,8 @@ class ChatActivity : AppCompatActivity() {
         val name = GroupManager.currentGroup?.name
         val senderUid = CurrentUserManager.currentUser?.phone
         val groupChatID = GroupManager.currentGroup?.groupID
+        //val groupChatID = intent.getStringExtra("group_id")
+        Log.d("GroupIDs", "Group IDs: $groupChatID")
 
         mDbRef = FirebaseDatabase.getInstance().getReference()
 
@@ -57,13 +60,17 @@ class ChatActivity : AppCompatActivity() {
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
+        Log.d("GroupIDs", "Group IDs: $groupChatID")
 
         mDbRef.child("Groups").child(groupChatID!!).child("chat")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messageList.clear()
                     for (postSnapshot in snapshot.children) {
+
                         val message = postSnapshot.getValue(com.example.getgoing.Message::class.java)
+
+
                         messageList.add(message!!)
                     }
                     messageAdapter.notifyDataSetChanged()

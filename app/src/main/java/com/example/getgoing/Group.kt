@@ -35,6 +35,18 @@ class Group {
         this.image = R.drawable.roy
         this.chat = arrayListOf(Message(" ","0"))
     }
+    constructor(
+        groupID: String?,
+        image: Int?,
+        name: String?
+    ){
+        this.name = name
+        this.members = arrayListOf(" ")
+        this.groupID = groupID
+        this.image = image
+        this.chat = arrayListOf(Message(" ","0"))
+
+    }
 
     fun addMember(friendPhone: String?) {
         if (members == null) {
