@@ -33,7 +33,7 @@ class Group {
         this.members = members
         this.groupID = groupID
         this.image = R.drawable.roy
-        this.chat = arrayListOf(Message("test","989898"))
+        this.chat = arrayListOf(Message(" ","0"))
     }
 
     fun addMember(friendPhone: String?) {

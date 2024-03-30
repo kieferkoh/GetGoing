@@ -2,6 +2,7 @@ package com.example.getgoing
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
@@ -33,13 +34,16 @@ class GroupDisplay : AppCompatActivity() {
         }
         val myUser = CurrentUserManager.currentUser
         val currentPhone = myUser?.phone.toString()
+
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
+
 
         CoroutineScope(Dispatchers.Main).launch {
             // Call the suspend function within the coroutine scope
-            var groupIDs = CurrentUserManager.getGroupList(currentPhone)
-            groupList = ArrayList()
-            groupList = GroupManager.getGroups(groupIDs)
+            var groupIDs = myUser?.groups
+            Log.d("GroupIDs", "Group IDs: $groupIDs")
+            groupList = GroupManager.getGroups(groupIDs!!)
+            Log.d("GroupIDs", "Group IDs: $groupList")
             GroupDisplayAdapter = GroupDisplayAdapter(groupList)
             groupChatRecyclerView.adapter = GroupDisplayAdapter
             groupChatRecyclerView.layoutManager = LinearLayoutManager(this@GroupDisplay)

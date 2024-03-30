@@ -3,6 +3,8 @@ package com.example.getgoing
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -82,6 +84,11 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
+
+
+
+
+
         // bottom 3 buttons
         spendingButton = findViewById(R.id.spending)
         locationButton = findViewById(R.id.location)
@@ -98,4 +105,24 @@ class ChatActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.group_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.group_edit_menu){
+            val intent = Intent(this@ChatActivity,GroupProfile::class.java)
+            startActivity(intent)
+            return true
+        }
+        else if(item.itemId == R.id.group_add_friend_menu){
+            val intent = Intent(this@ChatActivity,CreateGroupFriends::class.java)
+            startActivity(intent)
+            return true
+        }
+        return true
+    }
+
 }
