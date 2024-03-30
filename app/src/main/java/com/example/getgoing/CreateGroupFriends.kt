@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class CreateGroupFriends : AppCompatActivity() {
@@ -24,12 +27,24 @@ class CreateGroupFriends : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FriendListAdapter = FriendListAdapter(ArrayList())
 
 //      GROUP FRIEND LIST PAGE
         setContentView(R.layout.activity_create_group_friend_list)
 
         val doneBtn = findViewById<Button>(R.id.doneToGroupsPage)
         doneBtn.setOnClickListener {
+            var addFriendsToGroup = ArrayList<String>()
+            var checkListOfFriends = FriendListAdapter.getCheckedFriends()
+            for (friend in checkListOfFriends) {
+                addFriendsToGroup.add(friend.phone)
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                val gid = GroupManager.currentGroup?.groupID
+                GroupManager.addMembers(gid!!, addFriendsToGroup)
+            }
+
+
             val intent = Intent(this, GroupDisplay::class.java)
             startActivity(intent)
             finish()
@@ -42,11 +57,20 @@ class CreateGroupFriends : AppCompatActivity() {
             finish()
         }
 
-        FriendEntry = findViewById(R.id.groupFriendsRecyclerView)
-        FriendList = ArrayList()
-        FriendListAdapter = FriendListAdapter(FriendList)
-        FriendEntry.adapter = FriendListAdapter
+        CoroutineScope(Dispatchers.Main).launch {
 
+            FriendEntry = findViewById(R.id.groupFriendsRecyclerView)
+            FriendList = ArrayList()
+            FriendListAdapter = FriendListAdapter(FriendList)
+            FriendEntry.adapter = FriendListAdapter
+            CurrentUserManager.currentUser?.let { it ->
+                FriendManager.getFriends(it).forEach {
+                    FriendList.add(Friend(it.name!!, it.image!!, it.phone!!))
+                }
+            }
+            FriendListAdapter.notifyDataSetChanged()
+
+        }
         // on below line we are adding data to our list
 //        FriendList.add(Friend("Bob", R.drawable.bob))
 //        FriendList.add(Friend("Roy", R.drawable.roy))
@@ -79,6 +103,7 @@ class CreateGroupFriends : AppCompatActivity() {
         FriendListAdapter.notifyDataSetChanged()
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
@@ -105,7 +130,9 @@ class CreateGroupFriends : AppCompatActivity() {
         val filteredlist: ArrayList<Friend> = ArrayList()
 
         for (item in FriendList) {
-            if (item.name.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
+            if (item.name.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
                 filteredlist.add(item)
             }
         }
@@ -116,7 +143,7 @@ class CreateGroupFriends : AppCompatActivity() {
         }
     }
 
-    private fun addFriendToGroup(friend: Friend){
+    private fun addFriendToGroup(friend: Friend) {
         // Add friend to group database
     }
 }

@@ -66,40 +66,30 @@ class LogIn : AppCompatActivity() {
         mDbRef = FirebaseDatabase.getInstance().getReference()
 
         // Check if the phone number already exists in the database
-        mDbRef.child("User").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var exist = 0
-                for (postSnapshot in snapshot.children) {
-                    val currentUser = postSnapshot.getValue(User::class.java)
-                    if (phone.toString() == currentUser?.phone.toString()) {
-                        if (password == currentUser?.password) {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                // Call the suspend function within the coroutine scope
-                                var myUser = CurrentUserManager.getUserByPhone(phone)
-                                CurrentUserManager.currentUser = myUser
-                                if(myUser!=null){
-                                    val intent = Intent(this@LogIn, MainScreen::class.java)
-                                    finish()
-                                    startActivity(intent)}
-
-                            }
-                            if (currentUser != null) {
-                                currentUser.phone = phone.toString()
-                            }
-
-                        }
+        CoroutineScope(Dispatchers.Main).launch {
+            if (CurrentUserManager.getUserByPhone(phone) != null) {
+                // Call the suspend function within the coroutine scope
+                var myUser = CurrentUserManager.getUserByPhone(phone)
+                CurrentUserManager.currentUser = myUser
+                if (CurrentUserManager.currentUser != null) {
+                    if (password == myUser?.password) {
+                        val intent = Intent(this@LogIn, MainScreen::class.java)
+                        finish()
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@LogIn, "Wrong Password", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
 
 
     }
 
 }
+
+
+
+

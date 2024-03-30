@@ -31,9 +31,10 @@ class GroupDisplay : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        val currentUser = CurrentUserManager.currentUser
-        val currentPhone = currentUser!!.phone.toString()
+        val myUser = CurrentUserManager.currentUser
+        val currentPhone = myUser?.phone.toString()
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
+
         CoroutineScope(Dispatchers.Main).launch {
             // Call the suspend function within the coroutine scope
             var groupIDs = CurrentUserManager.getGroupList(currentPhone)
