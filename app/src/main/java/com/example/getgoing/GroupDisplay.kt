@@ -48,6 +48,7 @@ class GroupDisplay : AppCompatActivity() {
 
 
         var groupIDs = myUser?.groups
+        groupList.clear()
         for (id in groupIDs!!) {
             mDbRef.child("Groups").child(id)
                 .addValueEventListener(object : ValueEventListener {
