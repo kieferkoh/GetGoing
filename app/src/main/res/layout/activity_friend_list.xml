@@ -9,64 +9,62 @@
     android:orientation="vertical"
     tools:context=".FriendList">
 
-<!--end of added area-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:background="@drawable/background"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
 
         <ImageButton
             android:id="@+id/backToFriendsPage"
-            android:layout_width="40dp"
-            android:layout_height="43dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.018"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.005"
-            app:srcCompat="@drawable/backarrow" />
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/baseline_arrow_back_ios_24" />
 
         <Button
             android:id="@+id/goToFriendRequest"
-            android:layout_width="110dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_width="90dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="15dp"
             android:text="Requests"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:backgroundTint="@color/white"
+            android:textColor="@color/blueGreen" />
 
         <Button
             android:id="@+id/friendlist_removebutton"
             android:layout_width="90dp"
             android:layout_height="39dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="256dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="150dp"
             android:text="Remove"
             android:textAlignment="center"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/redd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backToFriendsPage"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <!--on below line we are creating a
-        text for heading of our app-->
+    <!--on below line we are creating a text for heading of our app-->
     <TextView
         android:id="@+id/idTVHeading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_margin="8dp"
         android:gravity="center"
         android:padding="4dp"
         android:text="Friends List"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
-<!--remove button-->
-    <!--request button-->
+
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/idSV"
         android:layout_width="match_parent"

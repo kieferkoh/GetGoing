@@ -19,7 +19,7 @@
             android:id="@+id/backToGroupDisplay"
             android:layout_width="45dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/baseline_arrow_back_ios_24"
             />
 
@@ -27,7 +27,7 @@
             android:id="@+id/GroupProfileTitle"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:text="Group(3)"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -75,7 +75,8 @@
             android:layout_marginTop="50dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/baseline_add_box_24"
-            android:background="@color/white"
+            android:background="@null"
+            android:scaleType="fitXY"
             />
     </LinearLayout>
 
@@ -91,7 +92,7 @@
             android:id="@+id/groupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="35dp"
             android:text="Group Name"
             android:textColor="@color/black"
@@ -102,7 +103,7 @@
             android:id="@+id/group_name_group_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="35dp"
             android:text="SC2006"
             android:textSize="25sp"
@@ -113,7 +114,7 @@
             android:id="@+id/setGroupName"
             android:layout_width="40dp"
             android:layout_height="43dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/baseline_navigate_next_24" />
 
