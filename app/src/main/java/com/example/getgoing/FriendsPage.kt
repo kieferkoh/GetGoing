@@ -14,6 +14,7 @@ class FriendsPage : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_friend_page)
+        supportActionBar?.hide()
 
         val backBtn = findViewById<ImageButton>(R.id.backToMainScreen)
         backBtn.setOnClickListener {

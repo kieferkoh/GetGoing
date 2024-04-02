@@ -38,6 +38,8 @@ class ChatActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_chat)
 
+        supportActionBar?.hide()
+
         val intent = Intent()
         val name = GroupManager.currentGroup?.name
         val senderUid = CurrentUserManager.currentUser?.phone

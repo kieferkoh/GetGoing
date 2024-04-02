@@ -33,6 +33,7 @@ class GroupDisplay : AppCompatActivity() {
 
         setContentView(R.layout.activity_group_display)
 
+        supportActionBar?.hide()
         val backBtn = findViewById<ImageButton>(R.id.backToGroupsPage)
         backBtn.setOnClickListener {
             val intent = Intent(this, GroupsPage::class.java)

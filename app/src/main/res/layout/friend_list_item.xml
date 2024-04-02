@@ -27,31 +27,38 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <!--on below line we are creating
             a simple text view-->
         <TextView
             android:id="@+id/idTVCourse"
-            android:layout_width="match_parent"
+            android:layout_width="231dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:padding="4dp"
             android:text="@string/app_name"
-            android:textAlignment="textStart"
             android:textColor="@color/black"
             android:textStyle="bold"
-            tools:ignore="RtlCompat" />
+            />
 
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:visibility="visible"
+            tools:visibility="visible"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@+id/idTVCourse"
+            />
     </LinearLayout>
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="116dp"
-        android:layout_height="wrap_content"
-        android:translationX="300dp"
-        android:translationY="25dp"
-        android:visibility="visible"
-        tools:visibility="visible" />
+
 
 </androidx.cardview.widget.CardView>

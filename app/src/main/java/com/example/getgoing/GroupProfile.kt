@@ -22,6 +22,7 @@ class GroupProfile : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_group_profile)
+        supportActionBar?.hide()
 
         val backBtn = findViewById<ImageButton>(R.id.backToGroupDisplay)
         backBtn.setOnClickListener {

@@ -33,6 +33,7 @@ class FriendList : AppCompatActivity() {
 //      FRIEND LIST PAGE
         setContentView(R.layout.activity_friend_list)
 
+        supportActionBar?.hide()
         val rqBtn = findViewById<Button>(R.id.goToFriendRequest)
         rqBtn.setOnClickListener {
             val intent = Intent(this, FriendRequest::class.java)

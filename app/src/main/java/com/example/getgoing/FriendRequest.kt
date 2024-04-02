@@ -27,6 +27,7 @@ class FriendRequest : AppCompatActivity(), FriendItemClickListener {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_friend_request)
+        supportActionBar?.hide()
 
         val backBtn = findViewById<ImageButton>(R.id.backToFriendList)
         backBtn.setOnClickListener {

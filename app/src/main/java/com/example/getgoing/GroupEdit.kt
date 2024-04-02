@@ -22,6 +22,7 @@ class GroupEdit : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_group_edit)
 
+        supportActionBar?.hide()
         val backBtn = findViewById<ImageButton>(R.id.backToGroupProfile)
         backBtn.setOnClickListener {
             val intent = Intent(this, GroupProfile::class.java)

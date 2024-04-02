@@ -26,6 +26,7 @@ class CreateGroupName : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        supportActionBar?.hide()
         setContentView(R.layout.activity_create_group_name)
 
         backBtn = findViewById<ImageButton>(R.id.backToGroupsPage)

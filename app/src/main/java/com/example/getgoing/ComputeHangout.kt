@@ -10,5 +10,6 @@ class ComputeHangout : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_compute_hangout)
 
+        supportActionBar?.hide()
     }
 }

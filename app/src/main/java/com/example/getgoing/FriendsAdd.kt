@@ -24,6 +24,7 @@ class FriendsAdd : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_add_friend)
+        supportActionBar?.hide()
 
         val backBtn = findViewById<ImageButton>(R.id.backToFriendPage)
         backBtn.setOnClickListener {

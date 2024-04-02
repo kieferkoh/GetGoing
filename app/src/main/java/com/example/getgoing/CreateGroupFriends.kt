@@ -29,6 +29,8 @@ class CreateGroupFriends : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FriendListAdapter = FriendListAdapter(ArrayList())
 
+        supportActionBar?.hide()
+
 //      GROUP FRIEND LIST PAGE
         setContentView(R.layout.activity_create_group_friend_list)
 
