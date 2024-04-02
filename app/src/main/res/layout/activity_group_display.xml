@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context=".GroupDisplay">
 
-    <ImageButton
-        android:id="@+id/backToGroupsPage"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/baseline_arrow_back_ios_24"
-        android:translationX="10dp"
-        android:translationY="15dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp"
-        tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:id="@+id/header"
-        android:text="Group Chats"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <ImageButton
+            android:id="@+id/backToGroupsPage"
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/baseline_arrow_back_ios_24" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!--on below line we are creating a text for heading of our app-->
+    <TextView
+        android:id="@+id/idGroupHeading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Groups"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:iconifiedByDefault="false"
-        app:searchHintIcon="@null"
-        app:queryHint="Search..."/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-
+    <!--on below line we are creating a recycler view-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/group_chats_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="22dp"
-        android:layout_margin="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintVertical_bias="1.0" />
+        android:layout_below="@+id/idGroupHeading"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
+
