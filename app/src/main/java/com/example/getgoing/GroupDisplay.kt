@@ -44,13 +44,13 @@ class GroupDisplay : AppCompatActivity() {
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
         groupChatRecyclerView.layoutManager = LinearLayoutManager(this)
         groupList = ArrayList()
-        mDbRef = FirebaseDatabase.getInstance().getReference()
+        mDbRef = FirebaseDatabase.getInstance().getReference("Groups")
 
 
         var groupIDs = myUser?.groups
         groupList.clear()
         for (id in groupIDs!!) {
-            mDbRef.child("Groups").child(id)
+            mDbRef.child(id)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val groupImage = snapshot.child("image").getValue(Int::class.java)

@@ -124,6 +124,12 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        locationButton.setOnClickListener {
+            val intent = Intent(this,SetLocation::class.java)
+            finish()
+            startActivity(intent)
+        }
+
 
     }
 
