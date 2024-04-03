@@ -40,6 +40,13 @@ class ChatActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        val backBtn = findViewById<ImageButton>(R.id.backToListOfGroups)
+        backBtn.setOnClickListener {
+            val intent = Intent(this, GroupDisplay::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val intent = Intent()
         val name = GroupManager.currentGroup?.name
         val senderUid = CurrentUserManager.currentUser?.phone
