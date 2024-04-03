@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".GroupDisplay">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@drawable/background"
         android:paddingStart="5dp"
-        android:paddingEnd="5dp">
+        android:paddingEnd="5dp"
+        tools:context=".GroupDisplay">
 
-        <ImageButton
-            android:id="@+id/backToGroupsPage"
-            android:layout_width="30dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/baseline_arrow_back_ios_24" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <!--on below line we are creating a text for heading of our app-->
     <TextView
-        android:id="@+id/idGroupHeading"
+        android:id="@+id/idTVHeading"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="8dp"
@@ -38,15 +25,36 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.004" />
 
-    <!--on below line we are creating a recycler view-->
+    <ImageButton
+        android:id="@+id/backToGroupsPage"
+        android:layout_width="40dp"
+        android:layout_height="43dp"
+
+        android:background="@drawable/baseline_arrow_back_ios_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.022"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.015" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/group_chats_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/idGroupHeading"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-</RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/idTVHeading"
+        app:layout_constraintVertical_bias="0.026"
+        tools:layout_editor_absoluteX="5dp" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>

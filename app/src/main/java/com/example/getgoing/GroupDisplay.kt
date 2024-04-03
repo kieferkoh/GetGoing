@@ -29,7 +29,6 @@ class GroupDisplay : AppCompatActivity() {
     //lateinit var searchView: SearchView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         setContentView(R.layout.activity_group_display)
 
