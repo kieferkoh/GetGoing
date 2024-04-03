@@ -24,6 +24,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatRecyclerView: RecyclerView
     private lateinit var messageBox: EditText
     private lateinit var sendButton: Button
+    private lateinit var backButton: ImageButton
     private lateinit var spendingButton: ImageButton
     private lateinit var locationButton: ImageButton
     private lateinit var computeHangoutButton: ImageButton
@@ -40,12 +41,7 @@ class ChatActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val backBtn = findViewById<ImageButton>(R.id.backToListOfGroups)
-        backBtn.setOnClickListener {
-            val intent = Intent(this, GroupDisplay::class.java)
-            startActivity(intent)
-            finish()
-        }
+
 
         val intent = Intent()
         val name = GroupManager.currentGroup?.name
@@ -62,6 +58,7 @@ class ChatActivity : AppCompatActivity() {
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sentButton)
+        backButton = findViewById(R.id.backToListOfGroups)
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
 
@@ -77,7 +74,8 @@ class ChatActivity : AppCompatActivity() {
                     messageList.clear()
                     for (postSnapshot in snapshot.children) {
 
-                        val message = postSnapshot.getValue(com.example.getgoing.Message::class.java)
+                        val message =
+                            postSnapshot.getValue(com.example.getgoing.Message::class.java)
 
 
                         messageList.add(message!!)
@@ -99,10 +97,11 @@ class ChatActivity : AppCompatActivity() {
             messageBox.setText("")
         }
 
-
-
-
-
+        backButton.setOnClickListener {
+            val intent = Intent(this, GroupDisplay::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 
         // bottom 3 buttons
@@ -123,18 +122,17 @@ class ChatActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.group_menu,menu)
+        menuInflater.inflate(R.menu.group_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.group_edit_menu){
-            val intent = Intent(this@ChatActivity,GroupProfile::class.java)
+        if (item.itemId == R.id.group_edit_menu) {
+            val intent = Intent(this@ChatActivity, GroupProfile::class.java)
             startActivity(intent)
             return true
-        }
-        else if(item.itemId == R.id.group_add_friend_menu){
-            val intent = Intent(this@ChatActivity,CreateGroupFriends::class.java)
+        } else if (item.itemId == R.id.group_add_friend_menu) {
+            val intent = Intent(this@ChatActivity, CreateGroupFriends::class.java)
             startActivity(intent)
             return true
         }
