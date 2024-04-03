@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageList: ArrayList<com.example.getgoing.Message>
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var groupTitle: TextView
 
 
     @SuppressLint("MissingInflatedId")
@@ -61,12 +63,16 @@ class ChatActivity : AppCompatActivity() {
         backButton = findViewById(R.id.backToListOfGroups)
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
+        groupTitle = findViewById(R.id.idTVHeading)
+
 
 
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
         Log.d("GroupIDs", "Group IDs: $groupChatID")
+
+        groupTitle.setText(GroupManager.currentGroup?.name)
 
         mDbRef.child("Groups").child(groupChatID!!).child("chat")
             .addValueEventListener(object : ValueEventListener {
