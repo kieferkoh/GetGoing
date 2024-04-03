@@ -6,11 +6,11 @@
     android:id="@+id/personalProfile"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".User"
+    tools:context=".ProfilePage"
     >
 
     <ImageButton
-        android:id="@+id/backToGroupDisplay"
+        android:id="@+id/backToMainScreen"
         android:layout_width="45dp"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
@@ -19,7 +19,7 @@
         />
 
     <ImageButton
-        android:id="@+id/profilePhoto"
+        android:id="@+id/setDP"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:background="@drawable/baseline_account_circle_24"
@@ -44,105 +44,16 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <EditText
+            android:id="@+id/editName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:layout_marginStart="20dp"
-            android:text="Bob"
+            android:hint=""
             android:textSize="25sp"
             android:textStyle="bold" />
 
-
-        <ImageButton
-            android:id="@+id/setUserName"
-            android:layout_width="40dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="175dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/baseline_navigate_next_24" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/whiterect"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/phoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="35dp"
-            android:text="Phone Number"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="20dp"
-            android:text="8888 6666"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-
-        <ImageButton
-            android:id="@+id/setPhoneNumber"
-            android:layout_width="40dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/baseline_navigate_next_24" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/whiterect"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="35dp"
-            android:text="Email"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="20dp"
-            android:text="bob5599@gmail.com"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-
-        <ImageButton
-            android:id="@+id/setGroupName"
-            android:layout_width="40dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/baseline_navigate_next_24" />
 
     </LinearLayout>
 
@@ -159,24 +70,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="35dp"
-            android:text="Address"
+            android:text="Location"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/curLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:layout_marginStart="20dp"
-            android:text="51 Nanyang Aveneue"
+            android:text=""
             android:textSize="20sp"
             android:textStyle="bold" />
 
 
         <ImageButton
-            android:id="@+id/setaddress"
+            android:id="@+id/setLocation"
             android:layout_width="40dp"
             android:layout_height="43dp"
             android:layout_marginStart="55dp"
@@ -187,12 +98,12 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/edt_btnProfile"
+        android:id="@+id/doneToMainScreen"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:text="Edit Profile"
+        android:text="Done"
         android:backgroundTint="@color/white"
         android:textColor="@color/blueGreen"
 

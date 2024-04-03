@@ -8,11 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +20,7 @@ class FriendList : AppCompatActivity() {
 
     lateinit var FriendEntry: RecyclerView
     lateinit var FriendListAdapter: FriendListAdapter
-    lateinit var FriendList: ArrayList<Friend>
+    lateinit var FriendsList: ArrayList<Friend>
     lateinit var searchView: SearchView
 
 
@@ -53,19 +50,23 @@ class FriendList : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 FriendListAdapter.getCheckedFriends().forEach {
                     CurrentUserManager.removeFriend(it.phone)
+                    FriendsList.remove(it)
+
                 }
+                FriendListAdapter.notifyDataSetChanged()
+
 
             }
         }
 
         CoroutineScope(Dispatchers.Main).launch {
             FriendEntry = findViewById(R.id.recyclableListFriends)
-            FriendList = ArrayList()
-            FriendListAdapter = FriendListAdapter(FriendList)
+            FriendsList = ArrayList()
+            FriendListAdapter = FriendListAdapter(FriendsList)
             FriendEntry.adapter = FriendListAdapter
             CurrentUserManager.currentUser?.let { it ->
                 FriendManager.getFriends(it).forEach {
-                    FriendList.add(Friend(it.name!!, it.image!!, it.phone!!))
+                    FriendsList.add(Friend(it.name!!, it.image!!, it.phone!!))
                 }
             }
             FriendListAdapter.notifyDataSetChanged()
@@ -90,7 +91,7 @@ class FriendList : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                FriendListAdapter.filterList(FriendList)
+                FriendListAdapter.filterList(FriendsList)
                 return false
             }
         })
@@ -121,7 +122,7 @@ class FriendList : AppCompatActivity() {
     private fun filter(text: String) {
         val filteredlist: ArrayList<Friend> = ArrayList()
 
-        for (item in FriendList) {
+        for (item in FriendsList) {
             if (item.name.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filteredlist.add(item)
             }

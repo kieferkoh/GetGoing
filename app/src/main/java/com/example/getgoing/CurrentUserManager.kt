@@ -12,9 +12,6 @@ object CurrentUserManager {
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     var currentUser: User? = null
 
-    suspend fun getUserWithReferenceAndPhone(phone: String): User?{
-        return DatabaseManager.fetchUserInfoFromFirebase(mDbRef.child("User").child(phone))
-    }
 
     suspend fun getFriendReqs(user: String): ArrayList<String> {
         return DatabaseManager.fetchDataListFromFirebase(

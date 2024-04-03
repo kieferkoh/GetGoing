@@ -21,7 +21,7 @@ class FriendRequest : AppCompatActivity(), FriendItemClickListener {
     lateinit var FriendEntry: RecyclerView
     lateinit var FriendListAdapter: FriendListAdapter
     lateinit var RemoveFrenAdapter: RemoveFriendAdapter
-    lateinit var FriendList: ArrayList<Friend>
+    lateinit var FriendsList: ArrayList<Friend>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +37,12 @@ class FriendRequest : AppCompatActivity(), FriendItemClickListener {
         }
         CoroutineScope(Dispatchers.Main).launch {
             FriendEntry = findViewById(R.id.recyclableListFriends)
-            FriendList = ArrayList()
-            RemoveFrenAdapter = RemoveFriendAdapter(FriendList, this@FriendRequest)
+            FriendsList = ArrayList()
+            RemoveFrenAdapter = RemoveFriendAdapter(FriendsList, this@FriendRequest)
             FriendEntry.adapter = RemoveFrenAdapter
             CurrentUserManager.currentUser?.let {
                 FriendManager.getFriendsReq(it).forEach {
-                    FriendList.add(Friend(it.name!!, it.image!!, it.phone!!))
+                    FriendsList.add(Friend(it.name!!, it.image!!, it.phone!!))
                 }
             }
             RemoveFrenAdapter.notifyDataSetChanged()
@@ -75,7 +75,7 @@ class FriendRequest : AppCompatActivity(), FriendItemClickListener {
     private fun filter(text: String) {
         val filteredlist: ArrayList<Friend> = ArrayList()
 
-        for (item in FriendList) {
+        for (item in FriendsList) {
             if (item.name.toLowerCase().contains(text.toLowerCase())) {
                 filteredlist.add(item)
             }
@@ -89,16 +89,20 @@ class FriendRequest : AppCompatActivity(), FriendItemClickListener {
 
     override fun onAcceptButtonClick(position: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-            val clickedFriend = FriendList[position]
+            val clickedFriend = FriendsList[position]
             CurrentUserManager.addFriend(clickedFriend.phone)
+            FriendsList.removeAt(position)
+            RemoveFrenAdapter.notifyItemRemoved(position)
         }
     }
 
     // Implement the interface method to handle decline button clicks
     override fun onDeclineButtonClick(position: Int) {
         CoroutineScope(Dispatchers.Main).launch {
-            val clickedFriend = FriendList[position]
+            val clickedFriend = FriendsList[position]
             CurrentUserManager.rejectFriendReq(clickedFriend.phone)
+            FriendsList.removeAt(position)
+            RemoveFrenAdapter.notifyItemRemoved(position)
         }
     }
 }

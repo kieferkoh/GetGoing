@@ -27,24 +27,6 @@ object DatabaseManager {
 //            null
 //        }
 //    }
-suspend fun fetchUserInfoFromFirebase(dbRef: DatabaseReference): User? {
-    return try {
-        val dataSnapshot = dbRef.get().await()
-        val userData = dataSnapshot.value as? HashMap<*, *>
-
-        if (userData != null && userData.isNotEmpty()) {
-            val name = userData["name"] as? String?
-            val phone = userData["phone"] as? String?
-            val password = userData["password"] as? String?
-            User(name!!, phone!!, password!!)
-        } else {
-            null
-        }
-    } catch (e: Exception) {
-        // Handle errors
-        null
-    }
-}
 
     suspend fun <T : Any> fetchDataListFromFirebase(
         dbRef: DatabaseReference,

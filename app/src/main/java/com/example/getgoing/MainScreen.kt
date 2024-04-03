@@ -26,6 +26,7 @@ class MainScreen : AppCompatActivity() {
         val friendsButton = findViewById<ImageButton>(R.id.friendPageBut)
         val groupsButton = findViewById<ImageButton>(R.id.groupPageBut)
         val signOutButton = findViewById<Button>(R.id.SignOut)
+        val profilePageButton = findViewById<Button>(R.id.ProfilePage)
 
         friendsButton.setOnClickListener {
 //             Navigate to the friends page
@@ -41,6 +42,11 @@ class MainScreen : AppCompatActivity() {
 
         signOutButton.setOnClickListener {
             val intent = Intent(this, LogIn::class.java)
+            startActivity(intent)
+        }
+
+        profilePageButton.setOnClickListener {
+            val intent = Intent(this, ProfilePage::class.java)
             startActivity(intent)
         }
 

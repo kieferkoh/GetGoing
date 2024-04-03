@@ -71,6 +71,9 @@
         <activity
             android:name=".FriendsAdd"
             android:exported="false" />
+        <activity
+            android:name=".ProfilePage"
+            android:exported="false" />
         <activity android:name=".GroupEdit" />
         <activity
             android:name=".SetLocation"
