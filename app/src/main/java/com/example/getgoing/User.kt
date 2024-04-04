@@ -1,6 +1,8 @@
 
 package com.example.getgoing
 
+import com.google.android.gms.maps.model.LatLng
+
 class User {
     var name: String? = null
     var phone: String? = null
@@ -9,7 +11,7 @@ class User {
     var friends: ArrayList<String>? = null
     var groups: ArrayList<String>? = null
     var friendreqs: ArrayList<String>? = null
-    var location: String? = null
+    var location: DefaultLocation? = null
 
     constructor() {}
 
@@ -23,7 +25,7 @@ class User {
         this.password = password
         this.image = R.drawable.roy
         this.friends = arrayListOf(" ")
-        this.location = " "
+        this.location = DefaultLocation()
         this.groups = arrayListOf(" ")
         this.friendreqs = arrayListOf(" ")
 

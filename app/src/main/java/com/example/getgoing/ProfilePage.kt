@@ -34,8 +34,8 @@ class ProfilePage : AppCompatActivity() {
             finish()
         }
         // Location
-        val currentLocation = findViewById<TextView>(R.id.curLocation)
-        currentLocation.text = user.location
+//        val currentLocation = findViewById<TextView>(R.id.curLocation)
+//        currentLocation.text = user.location
 
         // Navigation buttons
         val backBtn = findViewById<ImageButton>(R.id.backToMainScreen)
