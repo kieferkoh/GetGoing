@@ -7,9 +7,10 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import android.os.Bundle
 import android.widget.Button
-import android.widget.SearchView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
@@ -53,6 +54,8 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
 
 
+
+        //Set Location Button
         var addressListOut: List<Address>? = null
 
         findViewById<Button>(R.id.setLocationButton).setOnClickListener {
@@ -63,9 +66,20 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        //Get Location Button
+
         findViewById<Button>(R.id.getLocationButton).setOnClickListener {
             getCurrentLocation()
         }
+
+        //Back Button
+
+        findViewById<ImageButton>(R.id.backToChatPage).setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
         // Initialize the SearchView
         searchView = findViewById(R.id.searchView)
         // Set query hint
