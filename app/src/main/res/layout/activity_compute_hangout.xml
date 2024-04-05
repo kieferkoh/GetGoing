@@ -1,16 +1,29 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#75E1E3"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Search bar widget -->
 
-    <SearchView
-        android:layout_marginTop="50dp"
+    <ImageButton
+        android:id="@+id/backToChatPage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/baseline_arrow_back_ios_24"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_marginTop="70dp"
         android:id="@+id/search_bar_location"
-        android:layout_width="match_parent"
+        android:background="@drawable/searchview_background"
+        android:iconifiedByDefault="false"
+        android:layout_centerHorizontal="true"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:queryHint="Enter activity..." />
 

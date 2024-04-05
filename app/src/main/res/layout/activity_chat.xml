@@ -18,7 +18,6 @@
         android:id="@+id/backToListOfGroups"
         android:layout_width="40dp"
         android:layout_height="43dp"
-
         android:background="@drawable/baseline_arrow_back_ios_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.022"
@@ -34,17 +33,16 @@
         android:layout_margin="8dp"
         android:gravity="center"
         android:padding="4dp"
-        android:text="message"
+        android:text="Message"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.06" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -94,7 +92,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/border"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -105,37 +103,33 @@
 
     <ImageButton
         android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_toRightOf="@+id/spending"
-        android:background="@drawable/border"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.973"
-        app:srcCompat="@drawable/location" />
+        app:layout_constraintVertical_bias="0.961"
+        app:srcCompat="@drawable/baseline_share_location_24" />
 
     <ImageButton
         android:id="@+id/computeHangout"
-        android:layout_width="106dp"
-        android:layout_height="99dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="14dp"
         android:layout_toRightOf="@+id/location"
-        android:background="@drawable/border"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.982"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.969"
-        app:srcCompat="@drawable/compute_hangout_spot" />
+        app:layout_constraintVertical_bias="0.982"
+        app:srcCompat="@drawable/baseline_hangout_3_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
