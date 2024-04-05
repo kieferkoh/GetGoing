@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ComputeHangout"
+            android:name=".ComputeHangout2"
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
