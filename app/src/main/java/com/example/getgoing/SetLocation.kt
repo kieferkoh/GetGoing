@@ -201,7 +201,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                 currentUserRef.child("latitude").setValue(latitude)
         }
             else{
-                Toast.makeText(this@SetLocation,"No address specified",Toast.LENGTH_SHORT)
+                Toast.makeText(this@SetLocation,"No address specified",Toast.LENGTH_SHORT).show()
             }
 
     }}
