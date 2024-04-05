@@ -215,7 +215,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     private fun performAutocomplete(query: String) {
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
-            .setCountry("SG") // Restrict predictions to Singapore
+            .setCountries("SG") // Restrict predictions to Singapore
             .build()
 
         placesClient.findAutocompletePredictions(request)
