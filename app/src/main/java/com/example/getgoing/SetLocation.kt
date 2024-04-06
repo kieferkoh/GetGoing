@@ -54,14 +54,20 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
 
-
+        //
+        val whereFrom: String? = intent.getStringExtra("From")
 
         //Set Location Button
         var addressListOut: List<Address>? = null
 
         findViewById<Button>(R.id.setLocationButton).setOnClickListener {
             setLocation(addressListOut)
-            val intent = Intent(this, ChatActivity::class.java)
+            val intent: Intent
+            if (whereFrom == "chat") {
+                intent = Intent(this, ChatActivity::class.java)
+            } else {
+                intent = Intent(this, ProfilePage::class.java)
+            }
             finish()
             startActivity(intent)
 
@@ -76,7 +82,12 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
         //Back Button
 
         findViewById<ImageButton>(R.id.backToChatPage).setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
+            val intent: Intent
+            if (whereFrom == "chat") {
+                intent = Intent(this, ChatActivity::class.java)
+            } else {
+                intent = Intent(this, ProfilePage::class.java)
+            }
             finish()
             startActivity(intent)
         }
@@ -102,7 +113,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                     if (addressList != null) {
                         val address = addressList[0]
                         val latLng = LatLng(address.latitude, address.longitude)
-                        addressListOut=addressList
+                        addressListOut = addressList
                         // Handle the obtained LatLng
                         removeAllMarkers()
 
@@ -132,12 +143,14 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isZoomControlsEnabled = true
         if (CurrentUserManager.currentUser != null) {
             mDbRef.child("User").child(CurrentUserManager.currentUser?.phone!!).child("location")
-                .addValueEventListener(object : ValueEventListener{
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val longitude = snapshot.child("longitude").getValue(Double::class.java)
                         val latitude = snapshot.child("latitude").getValue(Double::class.java)
                         val singapore = LatLng(latitude!!, longitude!!)
-                        mMap.addMarker(MarkerOptions().position(singapore).title("Marker in Singapore"))
+                        mMap.addMarker(
+                            MarkerOptions().position(singapore).title("Marker in Singapore")
+                        )
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(singapore, 12f))
                     }
 
@@ -197,15 +210,17 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
             val latitude = latestAddress.latitude
             val longitude = latestAddress.longitude
             if (CurrentUserManager.currentUser != null) {
-                val currentUserRef = mDbRef.child("User").child(CurrentUserManager.currentUser?.phone!!).child("location")
+                val currentUserRef =
+                    mDbRef.child("User").child(CurrentUserManager.currentUser?.phone!!)
+                        .child("location")
                 currentUserRef.child("longitude").setValue(longitude)
                 currentUserRef.child("latitude").setValue(latitude)
-        }
-            else{
-                Toast.makeText(this@SetLocation,"No address specified",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this@SetLocation, "No address specified", Toast.LENGTH_SHORT).show()
             }
 
-    }}
+        }
+    }
 
     // Function to remove all markers from the map
     private fun removeAllMarkers() {

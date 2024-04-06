@@ -125,6 +125,7 @@ class ChatActivity : AppCompatActivity() {
 
         locationButton.setOnClickListener {
             val intent = Intent(this,SetLocation::class.java)
+            intent.putExtra("From", "chat")
             finish()
             startActivity(intent)
         }

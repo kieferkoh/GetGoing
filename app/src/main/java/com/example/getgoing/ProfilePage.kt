@@ -37,14 +37,14 @@ class ProfilePage : AppCompatActivity() {
 //        val currentLocation = findViewById<TextView>(R.id.curLocation)
 //        currentLocation.text = user.location
 
-//        // Location button
-//        val locationButton = findViewById<ImageButton>(R.id.setLocation)
-//        locationButton.setOnClickListener {
-//            val intent = Intent(this, SetLocation::class.java)
-//
-//            finish()
-//            startActivity(intent)
-//        }
+        // Location button
+        val locationButton = findViewById<ImageButton>(R.id.setLocation)
+        locationButton.setOnClickListener {
+            val intent = Intent(this, SetLocation::class.java)
+            intent.putExtra("From", "profile")
+            finish()
+            startActivity(intent)
+        }
 
         // Navigation buttons
         val backBtn = findViewById<ImageButton>(R.id.backToMainScreen)
