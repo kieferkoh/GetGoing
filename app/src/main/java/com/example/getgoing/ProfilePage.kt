@@ -9,6 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProfilePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +32,15 @@ class ProfilePage : AppCompatActivity() {
         val profilePicture = findViewById<ImageButton>(R.id.setDP)
         profilePicture.setImageResource(user?.image!!)
         profilePicture.setOnClickListener {
-            val intent = Intent(this, MainScreen::class.java)
+            val intent = Intent(this, ProfileSelection::class.java)
             startActivity(intent)
             finish()
         }
+
         // Location
-//        val currentLocation = findViewById<TextView>(R.id.curLocation)
-//        currentLocation.text = user.location
+        val currentLocation = findViewById<TextView>(R.id.curLocation)
+        currentLocation.text = user.location.toString()
+
 
         // Location button
         val locationButton = findViewById<ImageButton>(R.id.setLocation)
@@ -57,7 +62,11 @@ class ProfilePage : AppCompatActivity() {
         val doneBtn = findViewById<Button>(R.id.doneToMainScreen)
         doneBtn.setOnClickListener {
             // Input checks
-            user.name = username.text.toString()
+            if (username.text.toString() != "") {
+                CoroutineScope(Dispatchers.Main).launch {
+                    CurrentUserManager.updateName(username.text.toString())
+                }
+            }
             val intent = Intent(this, MainScreen::class.java)
             startActivity(intent)
             finish()

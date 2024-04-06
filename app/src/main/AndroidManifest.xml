@@ -81,6 +81,9 @@
         <activity
             android:name=".SetLocation"
             android:exported="false" />
+        <activity
+            android:name=".ProfileSelection"
+            android:exported="false" />
 
 
     </application>
