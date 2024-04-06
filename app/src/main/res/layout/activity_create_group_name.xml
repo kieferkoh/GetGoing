@@ -46,6 +46,8 @@
         android:hint="Enter group name"
         android:textColor="@color/black"
         android:textSize="22sp"
+        android:maxLength="15"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
