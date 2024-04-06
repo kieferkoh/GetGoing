@@ -248,6 +248,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     // Searching functions
     private fun performAutocomplete(query: String) {
         showFriendsLocation()
+        GroupManager.places = null
         val averageLocation =
             LatLng(totalLatitude / membersSize, totalLongitude / membersSize)
         Log.d("average11", "average: $averageLocation")
