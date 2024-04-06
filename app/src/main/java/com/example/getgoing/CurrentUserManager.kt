@@ -74,5 +74,16 @@ object CurrentUserManager {
         return GroupManager.createGroup(name, members)
     }
 
+    suspend fun updateName(name:String) : Boolean {
+        DatabaseManager.createDataFirebase(name, mDbRef.child("User").child(currentUser?.phone!!).child("name"))
+        currentUser?.name = name
+        return true
+    }
+
+    suspend fun updateDP(image: Int) : Boolean {
+        DatabaseManager.createDataFirebase(image, mDbRef.child("User").child(currentUser?.phone!!).child("image"))
+        currentUser?.image = image
+        return true
+    }
 
 }
