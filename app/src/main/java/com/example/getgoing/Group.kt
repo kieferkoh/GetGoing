@@ -1,5 +1,7 @@
 package com.example.getgoing
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.util.UUID
 
 class Group {
@@ -24,6 +26,7 @@ class Group {
         this.chat = chat
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     constructor(
         name: String?,
         members: ArrayList<String>?,
@@ -35,6 +38,7 @@ class Group {
         this.image = R.drawable.roy
         this.chat = arrayListOf(Message(" ","0"))
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     constructor(
         groupID: String?,
         image: Int?,

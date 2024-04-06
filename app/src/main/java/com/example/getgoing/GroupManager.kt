@@ -1,5 +1,6 @@
 package com.example.getgoing
 
+import com.google.android.libraries.places.api.model.Place
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
@@ -7,6 +8,7 @@ import java.util.UUID
 object GroupManager {
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     var currentGroup: Group? = null
+    var places: ArrayList<Place>? = null
     suspend fun createGroup(name: String, members: ArrayList<String>) : Boolean {
         val gid = UUID.randomUUID().toString()
         val dbRefGrp = mDbRef.child("Groups").child(gid)

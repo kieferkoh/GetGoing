@@ -39,6 +39,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     var totalLongitude: Double = 0.0
     var totalLatitude: Double = 0.0
     var membersSize: Int = 0
+    var places: ArrayList<Place>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +71,22 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
             mMap.clear()
             showFriendsLocation()
         }
+
+        // Get Friends Location
+        findViewById<Button>(R.id.startVoteButton).setOnClickListener {
+            if (places == null) {
+                Toast.makeText(this, "Input an activity first", Toast.LENGTH_SHORT).show()
+            } else {
+                GroupManager.places = places
+                val senderUid = "Voting"
+                val groupChatID = GroupManager.currentGroup?.groupID
+                val message = "Vote for Hangout Spot Here!!"
+                val messageObject = Message(message, senderUid)
+                mDbRef.child("Groups").child(groupChatID!!).child("chat").push()
+                    .setValue(messageObject)
+            }
+        }
+
 
 
         Places.initialize(applicationContext, "AIzaSyCBtPj2MvYWZHkyL5BSu2OCMtAujsJZszI")
@@ -263,6 +280,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                         placesClient.fetchPlace(placeRequest)
                             .addOnSuccessListener { response ->
                                 val place = response.place
+                                places?.add(place)
                                 val latLng = place.latLng
 
                                 // Display marker on the map
