@@ -44,12 +44,14 @@ class CreateGroupFriends : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 val gid = GroupManager.currentGroup?.groupID
                 GroupManager.addMembers(gid!!, addFriendsToGroup)
+                val intent = Intent(this@CreateGroupFriends, ChatActivity::class.java)
+
+                finish()
+                startActivity(intent)
             }
 
 
-            val intent = Intent(this, GroupDisplay::class.java)
-            startActivity(intent)
-            finish()
+
         }
 
         val backBtn = findViewById<Button>(R.id.cancelToGroupsPage)

@@ -54,8 +54,8 @@ class GroupDisplay : AppCompatActivity() {
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val groupImage = snapshot.child("image").getValue(Int::class.java)
-
                         val groupName = snapshot.child("name").getValue(String::class.java)
+
                         groupList.add(Group(id, groupImage,groupName))
                         GroupDisplayAdapter = GroupDisplayAdapter(groupList)
                         groupChatRecyclerView.adapter = GroupDisplayAdapter
@@ -70,10 +70,12 @@ class GroupDisplay : AppCompatActivity() {
                 })
 
         }
+        Log.d("GroupIDs", "Group IDs: $groupList")
 
 
 
-
+    }
+}
 
 //        CoroutineScope(Dispatchers.Main).launch {
 //            // Call the suspend function within the coroutine scope
@@ -91,5 +93,3 @@ class GroupDisplay : AppCompatActivity() {
 //        }
 
 
-    }
-}
