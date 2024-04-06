@@ -45,6 +45,7 @@
         android:layout_height="139dp"
         android:hint="Enter Friend's number"
         android:textSize="22sp"
+        android:inputType="phone"
         android:maxLength="8"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
