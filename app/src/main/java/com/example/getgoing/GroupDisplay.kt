@@ -42,36 +42,38 @@ class GroupDisplay : AppCompatActivity() {
         val myUser = CurrentUserManager.currentUser
         val currentPhone = myUser?.phone.toString()
         groupChatRecyclerView = findViewById(R.id.group_chats_recycler)
-        groupChatRecyclerView.layoutManager = LinearLayoutManager(this)
         groupList = ArrayList()
         mDbRef = FirebaseDatabase.getInstance().getReference("Groups")
 
 
-        var groupIDs = myUser?.groups
-        groupList.clear()
-        for (id in groupIDs!!) {
-            mDbRef.child(id)
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val groupImage = snapshot.child("image").getValue(Int::class.java)
-                        val groupName = snapshot.child("name").getValue(String::class.java)
+        CoroutineScope(Dispatchers.Main).launch {
+            var groupIDs = CurrentUserManager.getGroupList(currentPhone)
+            groupList.clear()
+            for (id in groupIDs) {
+                mDbRef.child(id)
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            Log.d("GroupIDsdisplay", "Group IDs: $id")
+                            val groupImage = snapshot.child("image").getValue(Int::class.java)
+                            val groupName = snapshot.child("name").getValue(String::class.java)
 
-                        groupList.add(Group(id, groupImage,groupName))
-                        GroupDisplayAdapter = GroupDisplayAdapter(groupList)
-                        groupChatRecyclerView.adapter = GroupDisplayAdapter
-                        groupChatRecyclerView.layoutManager = LinearLayoutManager(this@GroupDisplay)
+                            groupList.add(Group(id, groupImage, groupName))
+                            GroupDisplayAdapter = GroupDisplayAdapter(groupList)
+                            groupChatRecyclerView.adapter = GroupDisplayAdapter
+                            groupChatRecyclerView.layoutManager =
+                                LinearLayoutManager(this@GroupDisplay)
 
-                        GroupDisplayAdapter.notifyDataSetChanged()
-                    }
+                            GroupDisplayAdapter.notifyDataSetChanged()
+                        }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+            }
+
 
         }
-        Log.d("GroupIDs", "Group IDs: $groupList")
-
 
 
     }
