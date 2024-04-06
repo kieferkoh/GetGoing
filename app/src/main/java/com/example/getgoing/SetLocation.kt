@@ -9,6 +9,7 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -23,12 +24,18 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.example.getgoing.databinding.ActivitySetLocationBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import java.io.IOException
+import java.util.Locale
 
 
 class SetLocation : AppCompatActivity(), OnMapReadyCallback {
@@ -40,6 +47,10 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var searchView: SearchView
     private lateinit var locationCoordinates: LatLng
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var placesClient: PlacesClient
+    var addressListOut: LatLng? = null
+    var place: Place? = null
+    var placeNameOut: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,16 +69,18 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
         val whereFrom: String? = intent.getStringExtra("From")
 
         //Set Location Button
-        var addressListOut: List<Address>? = null
 
         findViewById<Button>(R.id.setLocationButton).setOnClickListener {
-            setLocation(addressListOut)
+
             val intent: Intent
             if (whereFrom == "chat") {
                 intent = Intent(this, ChatActivity::class.java)
             } else {
                 intent = Intent(this, ProfilePage::class.java)
+                intent.putExtra("placeName",placeNameOut)
+                Log.d("placename",placeNameOut!!)
             }
+            setLocation(place)
             finish()
             startActivity(intent)
 
@@ -92,6 +105,9 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        Places.initialize(applicationContext, "AIzaSyCBtPj2MvYWZHkyL5BSu2OCMtAujsJZszI")
+        placesClient = Places.createClient(this)
+
         // Initialize the SearchView
         searchView = findViewById(R.id.searchView)
         // Set query hint
@@ -99,32 +115,8 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
         // Set SearchView listener
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val location: String = searchView.query.toString()
-                var addressList: List<Address>? = null
-
-                if (location != null) {
-                    val geocoder = Geocoder(this@SetLocation)
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 1)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                    if (addressList != null) {
-                        val address = addressList[0]
-                        val latLng = LatLng(address.latitude, address.longitude)
-                        addressListOut = addressList
-                        // Handle the obtained LatLng
-                        removeAllMarkers()
-
-                        mMap.addMarker(MarkerOptions().position(latLng).title("User Location"))
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0F))
-                    } else {
-                        Toast.makeText(this@SetLocation, "Location not found.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-                return false
+                query?.let { searchLocation(query) }
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -204,12 +196,11 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
             }
     }
 
-    private fun setLocation(addressListOut: List<Address>?) {
-        if (addressListOut != null && addressListOut.isNotEmpty()) {
-            val latestAddress = addressListOut.last()
-            val latitude = latestAddress.latitude
-            val longitude = latestAddress.longitude
-            if (CurrentUserManager.currentUser != null) {
+    private fun setLocation(selectedPlace: Place?) {
+        if (selectedPlace != null && selectedPlace.latLng != null) {
+            val latitude = selectedPlace.latLng?.latitude
+            val longitude = selectedPlace.latLng?.longitude
+            if (CurrentUserManager.currentUser != null && latitude != null && longitude != null) {
                 val currentUserRef =
                     mDbRef.child("User").child(CurrentUserManager.currentUser?.phone!!)
                         .child("location")
@@ -218,13 +209,53 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
             } else {
                 Toast.makeText(this@SetLocation, "No address specified", Toast.LENGTH_SHORT).show()
             }
-
+        } else {
+            Toast.makeText(this@SetLocation, "Selected place is null", Toast.LENGTH_SHORT).show()
         }
     }
 
     // Function to remove all markers from the map
     private fun removeAllMarkers() {
         mMap.clear() // This clears all markers, polylines, and other overlays from the map.
+    }
+    private fun searchLocation(query: String) {
+        val request = FindAutocompletePredictionsRequest.builder()
+            .setQuery(query)
+            .setCountries(arrayListOf("SG"))
+            .build()
+
+        placesClient.findAutocompletePredictions(request)
+            .addOnSuccessListener { response ->
+                for (prediction in response.autocompletePredictions) {
+                    val placeId = prediction.placeId
+                    val placeName = prediction.getPrimaryText(null).toString()
+                    placeNameOut = placeName
+
+                    val placeRequest = FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG))
+                    placesClient.fetchPlace(placeRequest)
+                        .addOnSuccessListener { response ->
+                            val searchedPlace = response.place
+                            val latLng = searchedPlace.latLng
+                            addMarker(latLng!!, placeName)
+                            // Update the global variable addressListOut with the obtained LatLng
+                            addressListOut = latLng
+                            place = searchedPlace
+
+                        }
+                        .addOnFailureListener { exception ->
+                            // Handle failure
+                        }
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle failure
+            }
+    }
+
+    private fun addMarker(latLng: LatLng, title: String) {
+        removeAllMarkers() // Remove existing markers
+        mMap.addMarker(MarkerOptions().position(latLng).title(title))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
     }
 
     companion object {

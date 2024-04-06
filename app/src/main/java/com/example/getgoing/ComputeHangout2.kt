@@ -80,7 +80,6 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-
                     mMap.clear()
                     performAutocomplete(query)
                 }
