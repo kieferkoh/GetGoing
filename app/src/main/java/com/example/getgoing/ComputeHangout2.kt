@@ -264,8 +264,8 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         averageLocation.let { location ->
             // Only proceed if averageLocation is not null
             val bias = RectangularBounds.newInstance(
-                LatLng(location.latitude - 0.05, location.longitude - 0.05),
-                LatLng(location.latitude + 0.05, location.longitude + 0.05)
+                LatLng(location.latitude - 0.01, location.longitude - 0.01),
+                LatLng(location.latitude + 0.01, location.longitude + 0.01)
             )
 
             val request = FindAutocompletePredictionsRequest.builder()
