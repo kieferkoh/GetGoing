@@ -30,6 +30,10 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
+import java.io.IOException
 
 class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
 
@@ -323,23 +327,41 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
 
     private fun createVoteDatabase() {
         if (places != null) {
-            val placesList = places
             val groupID = GroupManager.currentGroup?.groupID
             val size = membersSize
-            for (place in placesList!!) {
+            for (place in places!!) {
+                val latLng = place.latLng
+                if (latLng != null) {
+                    val latitude = latLng.latitude
+                    val longitude = latLng.longitude
 
-                mDbRef.child("Vote").child(groupID!!).child("Size").setValue(place)
-                var reference = mDbRef.child("Vote").child(groupID).child(place.address!!)
-                reference.child("Address").setValue(place.address)
-                reference.child("Name").setValue(place.name)
-                reference.child("UserList").setValue(arrayListOf(" "))
-                reference.child("Latitude").setValue(place.latLng!!.latitude)
-                reference.child("Longitude").setValue(place.latLng!!.longitude)
+                    val name = getAddressFromLocation(this@ComputeHangout2, latitude, longitude)
+
+                    mDbRef.child("Vote").child(groupID!!).child("Size").setValue(size)
+                    val reference = mDbRef.child("Vote").child(groupID).child(name!!)
+                    reference.child("Name").setValue(name)
+                    reference.child("UserList").setValue(arrayListOf(" "))
+                    reference.child("Latitude").setValue(latitude)
+                    reference.child("Longitude").setValue(longitude)
+                }
             }
-
         }
-
-
+    }
+    fun getAddressFromLocation(context: Context, latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(context)
+        try {
+            val addresses: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null && addresses.isNotEmpty()) {
+                val address = addresses[0]
+                // Here you can extract the name or any other relevant information from the address
+                val name = address.featureName
+                // You can construct a more detailed address using other fields like locality, adminArea, etc.
+                return name
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
 }
