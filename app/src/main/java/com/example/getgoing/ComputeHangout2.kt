@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -35,9 +36,18 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mDbRef: DatabaseReference
     private lateinit var searchView: SearchView
     private lateinit var placesClient: PlacesClient
+    var totalLongitude: Double = 0.0
+    var totalLatitude: Double = 0.0
+    var membersSize: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+
+
         mDbRef = FirebaseDatabase.getInstance().getReference()
         binding = ActivityComputeHangout2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -183,20 +193,28 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         for (member in members) {
             val locationReference = mDbRef.child("User").child(member).child("location")
             var locations = ArrayList<LatLng>()
+
             locationReference
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val longitude = snapshot.child("longitude").getValue(Double::class.java)
                         val latitude = snapshot.child("latitude").getValue(Double::class.java)
                         val location = LatLng(latitude!!, longitude!!)
+
+                        totalLatitude += latitude
+                        totalLongitude += longitude
+
                         Log.d("Longitude", "long: $longitude")
                         Log.d("Latitude", "lat: $latitude")
                         mMap.addMarker(
                             MarkerOptions().position(location).title("Members Locations")
                         )
                         locations.add(location)
+
                         if (locations.size == members.size) {
+                            membersSize = members.size
                             callback(locations)
+
                         }
                     }
 
@@ -213,45 +231,67 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
 
     // Searching functions
     private fun performAutocomplete(query: String) {
-        val request = FindAutocompletePredictionsRequest.builder()
-            .setQuery(query)
-            .setCountries("SG") // Restrict predictions to Singapore
-            .build()
+        showFriendsLocation()
+        val averageLocation =
+            LatLng(totalLatitude / membersSize, totalLongitude / membersSize)
+        Log.d("average11", "average: $averageLocation")
 
-        placesClient.findAutocompletePredictions(request)
-            .addOnSuccessListener { response ->
-                // Handle Autocomplete prediction response
-                for (prediction in response.autocompletePredictions) {
-                    // Process each prediction
-                    val placeId = prediction.placeId
-                    val placeName = prediction.getPrimaryText(null).toString()
+        averageLocation.let { location ->
+            // Only proceed if averageLocation is not null
+            val bias = RectangularBounds.newInstance(
+                LatLng(location.latitude - 0.05, location.longitude - 0.05),
+                LatLng(location.latitude + 0.05, location.longitude + 0.05)
+            )
 
-                    // Retrieve place details using the Place ID
-                    val placeRequest = FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG))
+            val request = FindAutocompletePredictionsRequest.builder()
+                .setQuery(query)
+                .setCountries("SG") // Restrict predictions to Singapore
+                .setLocationBias(bias)
+                .build()
 
+            placesClient.findAutocompletePredictions(request)
+                .addOnSuccessListener { response ->
+                    // Handle Autocomplete prediction response
+                    for (prediction in response.autocompletePredictions) {
+                        // Process each prediction
+                        val placeId = prediction.placeId
+                        val placeName = prediction.getPrimaryText(null).toString()
 
-                    placesClient.fetchPlace(placeRequest)
-                        .addOnSuccessListener { response ->
-                            val place = response.place
-                            val latLng = place.latLng
+                        // Retrieve place details using the Place ID
+                        val placeRequest =
+                            FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG))
 
-                            // Display marker on the map
-                            latLng?.let {
-                                showFriendsLocation()
-                                mMap.addMarker(MarkerOptions().position(it).title(placeName).icon(BitmapDescriptorFactory.defaultMarker(
-                                    BitmapDescriptorFactory.HUE_BLUE)))
+                        placesClient.fetchPlace(placeRequest)
+                            .addOnSuccessListener { response ->
+                                val place = response.place
+                                val latLng = place.latLng
+
+                                // Display marker on the map
+                                latLng?.let {
+                                    showFriendsLocation()
+                                    mMap.addMarker(
+                                        MarkerOptions().position(it).title(placeName).icon(
+                                            BitmapDescriptorFactory.defaultMarker(
+                                                BitmapDescriptorFactory.HUE_BLUE
+                                            )
+                                        )
+                                    )
+                                }
                             }
-                        }
-                        .addOnFailureListener { exception ->
-                            // Handle error
-                            Log.e("FetchPlace", "Failed to fetch place details: ${exception.message}")
-                        }
+                            .addOnFailureListener { exception ->
+                                // Handle error
+                                Log.e(
+                                    "FetchPlace",
+                                    "Failed to fetch place details: ${exception.message}"
+                                )
+                            }
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                // Handle error
-                Log.e("Autocomplete", "Autocomplete prediction failed: ${exception.message}")
-            }
+                .addOnFailureListener { exception ->
+                    // Handle error
+                    Log.e("Autocomplete", "Autocomplete prediction failed: ${exception.message}")
+                }
+        }
     }
 
 }
