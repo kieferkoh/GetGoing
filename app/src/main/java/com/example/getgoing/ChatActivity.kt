@@ -32,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<com.example.getgoing.Message>
     private lateinit var mDbRef: DatabaseReference
     private lateinit var groupTitle: TextView
+    private lateinit var groupProfileButton: ImageButton
 
 
     @SuppressLint("MissingInflatedId")
@@ -60,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sentButton)
         backButton = findViewById(R.id.backToListOfGroups)
+        groupProfileButton = findViewById(R.id.edit_grp_ProfilePage)
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
         groupTitle = findViewById(R.id.idTVHeading)
@@ -104,8 +106,14 @@ class ChatActivity : AppCompatActivity() {
 
         backButton.setOnClickListener {
             val intent = Intent(this, GroupDisplay::class.java)
-            startActivity(intent)
             finish()
+            startActivity(intent)
+        }
+
+        groupProfileButton.setOnClickListener {
+            val intent = Intent(this@ChatActivity, GroupProfile::class.java)
+            finish()
+            startActivity(intent)
         }
 
 

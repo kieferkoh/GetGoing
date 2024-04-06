@@ -3,6 +3,7 @@ package com.example.getgoing
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -10,11 +11,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GroupProfile : AppCompatActivity() {
 
     private lateinit var setGroupName: ImageButton
     private lateinit var addMemberGroupProfile: ImageButton
+    private lateinit var leaveGroup: Button
     private lateinit var groupNameTitle: TextView
     private lateinit var groupNameBanner: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,7 @@ class GroupProfile : AppCompatActivity() {
         setGroupName = findViewById(R.id.setGroupName)
         groupNameBanner = findViewById(R.id.group_name_group_profile)
         groupNameTitle = findViewById(R.id.GroupProfileTitle)
+        leaveGroup = findViewById(R.id.leaveGroup)
 
         groupNameTitle.setText(GroupManager.currentGroup?.name)
         groupNameBanner.setText(GroupManager.currentGroup?.name)
@@ -52,4 +58,14 @@ class GroupProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }}
+        leaveGroup.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                val id = GroupManager.currentGroup?.groupID
+                val user = CurrentUserManager.currentUser?.phone
+                GroupManager.delMembers(id!!, arrayListOf(user!!))
+                val intent = Intent(this@GroupProfile,GroupDisplay::class.java)
+                startActivity(intent)
+        }
+    }
+    }
+}
