@@ -29,7 +29,7 @@ class VotingPage : AppCompatActivity() {
         val totalUsers: Int? = intent.getStringExtra("members")?.toInt()
         val backBtn = findViewById<ImageButton>(R.id.backToChatPage)
         backBtn.setOnClickListener {
-            val intent = Intent(this, FriendsPage::class.java)
+            val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -46,7 +46,7 @@ class VotingPage : AppCompatActivity() {
     }
 
     fun CloseVoting(item: VotingItem){
-        val intent = Intent(this, FriendsPage::class.java)
+        val intent = Intent(this, ChatActivity::class.java)
         intent.putExtra("Activity", item.name)
         startActivity(intent)
         finish()
