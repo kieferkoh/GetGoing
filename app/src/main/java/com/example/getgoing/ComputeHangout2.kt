@@ -40,8 +40,8 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
     var totalLongitude: Double = 0.0
     var totalLatitude: Double = 0.0
-    var membersSize: Int = 0
-    var places: ArrayList<Place>? = null
+    var membersSize: Int = 1
+    var places: ArrayList<Place>? = ArrayList()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -75,7 +75,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
             showFriendsLocation()
         }
 
-        // Get Friends Location
+        // Start Vote
 
         findViewById<Button>(R.id.startVoteButton).setOnClickListener {
             if (places == null) {
@@ -85,9 +85,14 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                 val senderUid = "Voting"
                 val groupChatID = GroupManager.currentGroup?.groupID
                 val message = "Vote for Hangout Spot Here!!"
-                val messageObject = Message(message, senderUid)
+                val messageObject = Message(message, senderUid, true)
                 mDbRef.child("Groups").child(groupChatID!!).child("chat").push()
                     .setValue(messageObject)
+                createVoteDatabase()
+                val intent = Intent(this,VotingPage::class.java)
+                intent.putExtra("GID",GroupManager.currentGroup?.groupID)
+                finish()
+                startActivity(intent)
             }
         }
 
@@ -232,7 +237,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                         locations.add(location)
 
                         if (locations.size == members.size) {
-                            membersSize = members.size
+                            membersSize = members.size + 1
                             callback(locations)
 
                         }
@@ -314,6 +319,27 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                     Log.e("Autocomplete", "Autocomplete prediction failed: ${exception.message}")
                 }
         }
+    }
+
+    private fun createVoteDatabase() {
+        if (places != null) {
+            val placesList = places
+            val groupID = GroupManager.currentGroup?.groupID
+            val size = membersSize
+            for (place in placesList!!) {
+
+                mDbRef.child("Vote").child(groupID!!).child("Size").setValue(place)
+                var reference = mDbRef.child("Vote").child(groupID).child(place.address!!)
+                reference.child("Address").setValue(place.address)
+                reference.child("Name").setValue(place.name)
+                reference.child("UserList").setValue(arrayListOf(" "))
+                reference.child("Latitude").setValue(place.latLng!!.latitude)
+                reference.child("Longitude").setValue(place.latLng!!.longitude)
+            }
+
+        }
+
+
     }
 
 }

@@ -59,8 +59,9 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
             4 -> {
                 // Inflate sent layout
                 // add new xml for this
-                val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
-                SentViewHolder(view)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
+                ReceiveViewHolder(view)
             }
 
             else -> {
@@ -85,8 +86,15 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
 
         } else if (currentMessage.senderId == "Voting") {
             //if someone click on a message where sender id == voting i want to add code herre
+            (holder as? ReceiveViewHolder)?.receiveMessage?.text = currentMessage.message
+            (holder as? ReceiveViewHolder)?.timeNow?.text = currentMessage.time
+            (holder as? ReceiveViewHolder)?.name?.text = "BIG DADDY VOTING SYSTEM"
             (holder as? ReceiveViewHolder)?.itemView?.setOnClickListener {
-                //val intent = Intent(this, voting kt)
+                val intent = Intent(context, VotingPage::class.java)
+                intent.putExtra("GID",GroupManager.currentGroup?.groupID)
+                context.startActivity(intent)
+
+
             }
         } else {
             (holder as? ReceiveViewHolder)?.receiveMessage?.text = currentMessage.message
