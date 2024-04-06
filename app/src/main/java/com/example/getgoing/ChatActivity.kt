@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.sql.Time
+import java.util.Date
+import java.text.SimpleDateFormat
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var chatRecyclerView: RecyclerView
@@ -65,7 +69,6 @@ class ChatActivity : AppCompatActivity() {
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
         groupTitle = findViewById(R.id.idTVHeading)
-
 
 
 
