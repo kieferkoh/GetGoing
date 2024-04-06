@@ -79,6 +79,8 @@
         android:layout_marginLeft="10dp"
         android:layout_weight="85"
         android:hint="Type your message"
+        android:inputType="text"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
