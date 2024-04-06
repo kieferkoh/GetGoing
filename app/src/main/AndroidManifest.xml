@@ -84,7 +84,9 @@
         <activity
             android:name=".ProfileSelection"
             android:exported="false" />
-
+        <activity
+            android:name=".VotingPage"
+            android:exported="false" />
 
     </application>
 

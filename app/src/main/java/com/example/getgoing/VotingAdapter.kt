@@ -20,7 +20,7 @@ class VotingAdapter(
 ) : RecyclerView.Adapter<VotingAdapter.VotingViewHolder>() {
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VotingViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_voting_page, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.voting_item, parent, false)
         return VotingViewHolder(itemView)
     }
 
@@ -67,7 +67,7 @@ class VotingAdapter(
 
             }
             if (item.userList?.size == totalMembers){
-                votingPage.CloseVoting(item)
+                votingPage.closeVoting(item)
             }
         }
     }
