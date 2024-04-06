@@ -1,6 +1,7 @@
 package com.example.getgoing
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
         val timeNow = itemView.findViewById<TextView>(R.id.text_gchat_timestamp_other)
         val name = itemView.findViewById<TextView>(R.id.text_gchat_user_other)
     }
+
     class EmptyViewHolder(itemView: View) : ViewHolder(itemView) {
         // No need to define any views or perform any operations in this ViewHolder
         // It simply acts as a placeholder for cases where no view needs to be displayed
@@ -43,20 +45,24 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
         return when (viewType) {
             1 -> {
                 // Inflate receive layout
-                val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
                 ReceiveViewHolder(view)
             }
+
             2 -> {
                 // Inflate sent layout
                 val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
                 SentViewHolder(view)
             }
+
             4 -> {
                 // Inflate sent layout
                 // add new xml for this
                 val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
                 SentViewHolder(view)
             }
+
             else -> {
                 // Create an empty view
                 val emptyView = View(context)
@@ -77,6 +83,11 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
             (holder as? SentViewHolder)?.sentMessage?.text = currentMessage.message
             (holder as? SentViewHolder)?.timeNow?.text = currentMessage.time
 
+        } else if (currentMessage.senderId == "Voting") {
+            //if someone click on a message where sender id == voting i want to add code herre
+            (holder as? ReceiveViewHolder)?.itemView?.setOnClickListener {
+                //val intent = Intent(this, voting kt)
+            }
         } else {
             (holder as? ReceiveViewHolder)?.receiveMessage?.text = currentMessage.message
             (holder as? ReceiveViewHolder)?.timeNow?.text = currentMessage.time
@@ -93,10 +104,9 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
             return ITEM_SENT
         } else if (currentMessage.senderId == "0") {
             return 3
-        } else if (currentMessage.senderId == "Voting"){
+        } else if (currentMessage.senderId == "Voting") {
             return 4
-        }
-        else {
+        } else {
             return ITEM_RECEIVE
         }
     }
