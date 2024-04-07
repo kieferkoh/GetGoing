@@ -38,7 +38,6 @@ class CreateBills : AppCompatActivity() {
         supportActionBar?.hide()
 
 
-
         var groupID = GroupManager.currentGroup?.groupID
         var groupName = GroupManager.currentGroup?.name
 
@@ -63,6 +62,14 @@ class CreateBills : AppCompatActivity() {
                 var user = CurrentUserManager.getUserByPhone(phone)
                 memberList.add(user!!)
             }
+
+            var EventRef =
+                FirebaseDatabase.getInstance().getReference().child("Bills").child(groupID!!)
+            var eventList = DatabaseManager.fetchDataListFromFirebase(
+                EventRef.child("EventList"),
+                String::class.java
+            )
+
             createBillEventRecyclerView = findViewById(R.id.createBillMemberRecyclerView)
             CreateBillsDisplayAdapter = CreateBillsDisplayAdapter(memberList)
             createBillEventRecyclerView.adapter = CreateBillsDisplayAdapter
@@ -76,32 +83,33 @@ class CreateBills : AppCompatActivity() {
                 var billName = billNameEDT.text.toString().trim()
                 val members = adapter.getMemberList()
                 if (billName.isEmpty()) {
-                    Toast.makeText(this@CreateBills, "Please enter a bill name", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CreateBills, "Please enter a bill name", Toast.LENGTH_SHORT)
+                        .show()
                     return@setOnClickListener
-                }
-                else{
+                } else {
                     for (i in 0 until adapter.itemCount) {
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(i)
                         if (viewHolder is CreateBillsDisplayAdapter.MemberViewHolder) {
                             val user = members[i]
-                            var inputAmount = viewHolder.inputAmountCreateBill.text.toString().trim()
-                            if(inputAmount == null) inputAmount = "0"
+                            var inputAmount =
+                                viewHolder.inputAmountCreateBill.text.toString().trim()
+                            if (inputAmount == null) inputAmount = "0"
                             // Do something with the user and inputAmount
-                            mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills").child(groupID!!).child(billName).child(user.phone!!)
+                            mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills")
+                                .child(groupID!!).child(billName).child(user.phone!!)
                             mDbRef.setValue(inputAmount)
+                            eventList.add(billName)
+                            EventRef.child("EventList").setValue(eventList)
+
+                        }
+                        val intent = Intent(this@CreateBills, Bills::class.java)
+                        finish()
+                        startActivity(intent)
                     }
-                    val intent = Intent(this@CreateBills,Bills::class.java)
-                    finish()
-                    startActivity(intent)
-                }
                 }
 
 
             }
-
-
-
-
 
 
         }
