@@ -2,6 +2,7 @@ package com.example.getgoing
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -12,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +41,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var groupProfileButton: ImageButton
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,6 +139,13 @@ class ChatActivity : AppCompatActivity() {
 
         locationButton.setOnClickListener {
             val intent = Intent(this,SetLocation::class.java)
+            intent.putExtra("From", "chat")
+            finish()
+            startActivity(intent)
+        }
+
+        spendingButton.setOnClickListener {
+            val intent = Intent(this,Bills::class.java)
             intent.putExtra("From", "chat")
             finish()
             startActivity(intent)
