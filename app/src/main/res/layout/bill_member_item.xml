@@ -45,7 +45,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/idIVCourse"
+            app:layout_constraintStart_toEndOf="@+id/idMemberImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -55,12 +55,12 @@
             android:layout_gravity="center"
             android:buttonTint="@color/black"
             android:padding="5dp"
-            android:text="          Amount ($)"
+            android:hint="          Amount ($)"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/idTVCourse"
+            app:layout_constraintStart_toEndOf="@+id/memberName"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>

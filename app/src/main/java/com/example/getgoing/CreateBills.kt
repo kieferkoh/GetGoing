@@ -87,9 +87,12 @@ class CreateBills : AppCompatActivity() {
                             var inputAmount = viewHolder.inputAmountCreateBill.text.toString().trim()
                             if(inputAmount == null) inputAmount = "0"
                             // Do something with the user and inputAmount
-                            mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills").child(groupID!!).child(billName).child(user.phone!!).child(inputAmount)
+                            mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills").child(groupID!!).child(billName).child(user.phone!!)
+                            mDbRef.setValue(inputAmount)
                     }
                     val intent = Intent(this@CreateBills,Bills::class.java)
+                    finish()
+                    startActivity(intent)
                 }
                 }
 
