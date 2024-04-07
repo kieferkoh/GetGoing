@@ -99,7 +99,7 @@ class Bills : AppCompatActivity() {
                             }
                             billEventRecyclerView = findViewById(R.id.recyclableListBills)
 
-                            BillsDisplayAdapter = BillsDisplayAdapter(eventList)
+                            BillsDisplayAdapter = BillsDisplayAdapter(eventList, this@Bills)
                             billEventRecyclerView.adapter = BillsDisplayAdapter
                             BillsDisplayAdapter.notifyDataSetChanged()
 
