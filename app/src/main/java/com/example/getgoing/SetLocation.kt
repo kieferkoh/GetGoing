@@ -77,7 +77,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                 intent = Intent(this, ChatActivity::class.java)
             } else {
                 intent = Intent(this, ProfilePage::class.java)
-                intent.putExtra("placeName",place?.name)
+                intent.putExtra("placeName", place?.name)
             }
             setLocation(place)
             finish()
@@ -205,6 +205,9 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                         .child("location")
                 currentUserRef.child("longitude").setValue(longitude)
                 currentUserRef.child("latitude").setValue(latitude)
+                Log.d("addresstest",selectedPlace.address!!.toString())
+                mDbRef.child("User").child(CurrentUserManager.currentUser?.phone!!).child("address")
+                    .setValue(selectedPlace.address!!)
             } else {
                 Toast.makeText(this@SetLocation, "No address specified", Toast.LENGTH_SHORT).show()
             }
@@ -217,6 +220,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
     private fun removeAllMarkers() {
         mMap.clear() // This clears all markers, polylines, and other overlays from the map.
     }
+
     private fun searchLocation(query: String) {
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
@@ -230,7 +234,10 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                     val placeName = prediction.getPrimaryText(null).toString()
                     placeNameOut = placeName
 
-                    val placeRequest = FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG,Place.Field.NAME,Place.Field.ADDRESS))
+                    val placeRequest = FetchPlaceRequest.newInstance(
+                        placeId,
+                        listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+                    )
                     placesClient.fetchPlace(placeRequest)
                         .addOnSuccessListener { response ->
                             val searchedPlace = response.place

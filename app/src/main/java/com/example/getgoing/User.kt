@@ -12,6 +12,7 @@ class User {
     var groups: ArrayList<String>? = null
     var friendreqs: ArrayList<String>? = null
     var location: DefaultLocation? = null
+    var address: String? = null
 
     constructor() {}
 
@@ -28,6 +29,7 @@ class User {
         this.location = DefaultLocation()
         this.groups = arrayListOf(" ")
         this.friendreqs = arrayListOf(" ")
+        this.address = "Default Location"
 
     }
 

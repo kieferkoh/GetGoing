@@ -39,8 +39,9 @@ class ProfilePage : AppCompatActivity() {
 
         // Location
         val currentLocation = findViewById<TextView>(R.id.curLocation)
-        currentLocation.text = user.location.toString()
-
+        CoroutineScope(Dispatchers.Main).launch {
+            currentLocation.text = CurrentUserManager.getUserByPhone(user.phone!!)?.address
+        }
 
         // Location button
         val locationButton = findViewById<ImageButton>(R.id.setLocation)
