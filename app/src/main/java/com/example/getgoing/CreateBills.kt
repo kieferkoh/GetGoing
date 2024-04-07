@@ -93,8 +93,8 @@ class CreateBills : AppCompatActivity() {
                         if (viewHolder is CreateBillsDisplayAdapter.MemberViewHolder) {
                             val user = members[i]
                             var inputAmount =
-                                viewHolder.inputAmountCreateBill.text.toString().trim()
-                            if (inputAmount == null) inputAmount = "0"
+                                viewHolder.inputAmountCreateBill.text.toString().trim().toDouble()
+                            if (inputAmount == null) inputAmount = 0.0
                             // Do something with the user and inputAmount
                             totalAmount += inputAmount.toDouble()
                             mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills")

@@ -2,6 +2,7 @@ package com.example.getgoing
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -68,25 +69,58 @@ class Bills : AppCompatActivity() {
 //        })
 
 
-        CoroutineScope(Dispatchers.Main).launch {
-            eventList = arrayListOf()
-            eventRef = FirebaseDatabase.getInstance().getReference("Bills").child(groupID!!)
-            val eventListString = DatabaseManager.fetchDataListFromFirebase(
-                eventRef.child("EventList"),
-                String::class.java
-            )
-            for (event in eventListString){
-                var totalAmount = DatabaseManager.fetchDataFromFirebase(eventRef.child(event), Int::class.java)
-                eventList.add(Event(event,totalAmount!!))
+
+        eventList = arrayListOf()
+        eventRef = FirebaseDatabase.getInstance().getReference("Bills").child(groupID!!)
+
+        eventRef.child("EventList").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val eventListString: MutableList<String> = mutableListOf()
+
+                for (eventSnapshot in dataSnapshot.children) {
+                    val event: String? = eventSnapshot.getValue(String::class.java)
+                    event?.let {
+                        eventListString.add(it)
+                    }
+                }
+
+                // Now you have the eventList populated with data from Firebase
+                // You can use it as needed here
+                for (event in eventListString) {
+                    Log.d("event",event)
+                    eventRef.child(event).child("Total").addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val totalAmount: Double? = dataSnapshot.getValue(Double::class.java)
+
+                            // Add the event to your list
+                            totalAmount?.let {
+                                Log.d("total",totalAmount.toString())
+                                eventList.add(Event(event, it))
+                            }
+                            billEventRecyclerView = findViewById(R.id.recyclableListBills)
+
+                            BillsDisplayAdapter = BillsDisplayAdapter(eventList)
+                            billEventRecyclerView.adapter = BillsDisplayAdapter
+                            BillsDisplayAdapter.notifyDataSetChanged()
+
+                            // You may need to notify your adapter or update UI here
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            // Handle error
+                        }
+                    })
+                }
             }
-            billEventRecyclerView = findViewById(R.id.recyclableListBills)
 
-            BillsDisplayAdapter = BillsDisplayAdapter(eventList)
-            billEventRecyclerView.adapter = BillsDisplayAdapter
-            BillsDisplayAdapter.notifyDataSetChanged()
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+            }
+        })
 
 
-        }
+
+
 
 
     }
