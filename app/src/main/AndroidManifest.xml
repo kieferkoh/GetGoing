@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,12 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".RespectiveBill"
+            android:exported="false" />
+        <activity
+            android:name=".CreateBills"
+            android:exported="false" />
+        <activity
+            android:name=".Bills"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/Map_API_KEY"
-            tools:replace="android:value"/>
-
+            tools:replace="android:value" />
 
         <activity
             android:name=".LogIn"
@@ -37,8 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".SignUp"
             android:exported="false" />
@@ -53,8 +61,8 @@
             android:exported="false" />
         <activity
             android:name=".CreateGroupName"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".FriendList"
             android:exported="false" />
@@ -72,8 +80,8 @@
             android:exported="false" />
         <activity
             android:name=".FriendsAdd"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ProfilePage"
             android:exported="false" />
@@ -87,7 +95,6 @@
         <activity
             android:name=".VotingPage"
             android:exported="false" />
-
     </application>
 
 </manifest>
