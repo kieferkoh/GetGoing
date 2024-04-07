@@ -76,10 +76,12 @@ class VotingPage : AppCompatActivity() {
 
         }
     }
-        fun closeVoting(item: VotingItem) {
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("Activity", item.address)
-            startActivity(intent)
-            finish()
+        fun closeVoting(item: VotingItem, gid: String) {
+            CoroutineScope(Dispatchers.Main).launch {
+                DatabaseManager.createDataFirebase(item.address, mDbRef.child("Groups").child(gid).child("Activity"))
+                val intent = Intent(this@VotingPage, ChatActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 }

@@ -22,6 +22,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.sql.Time
 import java.util.Date
 import java.text.SimpleDateFormat
@@ -60,6 +63,12 @@ class ChatActivity : AppCompatActivity() {
         Log.d("GroupIDs", "Group IDs: $groupChatID")
 
         mDbRef = FirebaseDatabase.getInstance().getReference()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val activity = DatabaseManager.fetchDataFromFirebase(mDbRef.child("Groups").child(groupChatID!!).child("Activity"), String::class.java)
+            val hangout = findViewById<TextView>(R.id.hangoutSpot)
+            "Hangout : $activity".also { hangout.text = it }
+        }
 
         supportActionBar?.title = name
 
