@@ -45,35 +45,40 @@ class VotingPage : AppCompatActivity() {
 
 
         CoroutineScope(Dispatchers.Main).launch {
+            VotingList = ArrayList()
             val reference = mDbRef.child("Vote").child(gid!!)
             val totalUsers =
                 DatabaseManager.fetchDataFromFirebase(reference.child("Size"), Int::class.java)
-            val nameList =
-                DatabaseManager.fetchDataListFromFirebase(reference.child("nameList"), String::class.java)
-            for (name in nameList) {
+            val addrList =
+                DatabaseManager.fetchDataListFromFirebase(reference.child("AddressList"), String::class.java)
+            for (addr in addrList) {
                 val itemName = DatabaseManager.fetchDataFromFirebase(
-                    reference.child(name).child("Name"),
+                    reference.child(addr).child("Name"),
                     String::class.java
                 )
                 val itemAddr = DatabaseManager.fetchDataFromFirebase(
-                    reference.child(name).child("Address"),
+                    reference.child(addr).child("Address"),
                     String::class.java
                 )
                 val itemUserList = DatabaseManager.fetchDataListFromFirebase(
-                    reference.child(name).child("UserList"), String::class.java
+                    reference.child(addr).child("userList"), String::class.java
                 )
+                for (user in itemUserList){
+                    Log.d("item user list", user)
+                }
                 VotingList.add(VotingItem(itemName, itemAddr, itemUserList))
+            }
                 VotingView = findViewById(R.id.recyclableListVotes)
                 VotingAdapter =
                     VotingAdapter(VotingList, gid, totalUsers!!, this@VotingPage)
                 VotingView.adapter = VotingAdapter
                 VotingAdapter.notifyDataSetChanged()
-            }
+
         }
     }
         fun closeVoting(item: VotingItem) {
             val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("Activity", item.name)
+            intent.putExtra("Activity", item.address)
             startActivity(intent)
             finish()
         }

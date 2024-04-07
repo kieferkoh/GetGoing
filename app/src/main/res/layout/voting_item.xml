@@ -14,9 +14,10 @@
             a linear layout for grid view item-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/idTVHeading"
         android:orientation="horizontal">
+
 
         <TextView
             android:id="@+id/locationText"
@@ -24,16 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="4dp"
-            android:padding="5dp"
             android:maxLength="30"
+            android:padding="5dp"
             android:text="John"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintHorizontal_bias="0.031"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
+            app:layout_constraintVertical_bias="0.523" />
 
         <TextView
             android:id="@+id/votes"
@@ -43,9 +43,9 @@
             android:layout_margin="5dp"
             android:layout_marginStart="5dp"
             android:maxLength="10"
-            android:textAlignment="center"
             android:padding="4dp"
             android:text="0 votes"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,12 +57,13 @@
         <Button
             android:id="@+id/voteButton"
             android:layout_width="90dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:buttonTint="@color/black"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/votes"
+            app:layout_constraintHorizontal_bias="0.983"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>

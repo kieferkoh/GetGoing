@@ -46,7 +46,6 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     var totalLatitude: Double = 0.0
     var membersSize: Int = 2
     var places: ArrayList<Place>? = ArrayList()
-    var nameList: ArrayList<String>? = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -355,7 +354,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                     val reference = mDbRef.child("Vote").child(groupID).child(sanitisedAddress)
                     reference.child("Name").setValue(place.name)
                     reference.child("Address").setValue(sanitisedAddress)
-                    reference.child("UserList").setValue(arrayListOf(""))
+                    reference.child("userList").setValue(arrayListOf(""))
                     reference.child("Latitude").setValue(latitude)
                     reference.child("Longitude").setValue(longitude)
                 }

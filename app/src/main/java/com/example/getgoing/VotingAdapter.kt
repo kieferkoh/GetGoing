@@ -39,8 +39,19 @@ class VotingAdapter(
         private val voteButton: Button = itemView.findViewById(R.id.voteButton)
 
         fun bind(item: VotingItem) {
-            locationNameTextView.text = item.name
+            if (item.address == "Singapore"){
+                locationNameTextView.text = item.name
+            }
+            else {
+                locationNameTextView.text = item.address
+            }
+            if (!item.userList?.isEmpty()!!) {
+                if (item.userList?.get(0) == "") {
+                    item.userList!!.remove("")
+                }
+            }
             voteCountTextView.text = item.userList?.size.toString()
+
 
             val hasVoted = (item.userList?.contains(CurrentUserManager.currentUser?.phone.toString()) == true)
             voteButton.text = if (hasVoted) "Unvote" else "Vote"
@@ -55,12 +66,18 @@ class VotingAdapter(
                     // Vote
                     item.userList?.add(CurrentUserManager.currentUser?.phone!!)
                 }
-                voteCountTextView.text = item.userList?.size.toString()
+                if (item.userList?.isEmpty() == true){
+                    item.userList?.add("")
+                    voteCountTextView.text = "0"
+                }
+                else {
+                    voteCountTextView.text = item.userList?.size.toString()
+                }
                 notifyDataSetChanged()
                 CoroutineScope(Dispatchers.Main).launch {
                     DatabaseManager.createDataFirebase(
-                        item,
-                        mDbRef.child("Vote").child(GID).child(item.name!!)
+                        item.userList,
+                        mDbRef.child("Vote").child(GID).child(item.address!!).child("userList")
                     )
                 }
 

@@ -8,11 +8,11 @@ class VotingItem {
     constructor(
         name: String?,
         address: String?,
-        userList: java.util.ArrayList<*>?
+        userList: java.util.ArrayList<String>
     ){
         this.name = name
         this.address = address
-        this.userList = ArrayList()
+        this.userList = userList
     }
 
 }
