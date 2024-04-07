@@ -87,6 +87,7 @@ class CreateBills : AppCompatActivity() {
                         .show()
                     return@setOnClickListener
                 } else {
+                    var totalAmount = 0.0
                     for (i in 0 until adapter.itemCount) {
                         val viewHolder = recyclerView.findViewHolderForAdapterPosition(i)
                         if (viewHolder is CreateBillsDisplayAdapter.MemberViewHolder) {
@@ -95,17 +96,21 @@ class CreateBills : AppCompatActivity() {
                                 viewHolder.inputAmountCreateBill.text.toString().trim()
                             if (inputAmount == null) inputAmount = "0"
                             // Do something with the user and inputAmount
+                            totalAmount += inputAmount.toDouble()
                             mDbRef = FirebaseDatabase.getInstance().getReference().child("Bills")
-                                .child(groupID!!).child(billName).child(user.phone!!)
+                                .child(groupID).child(billName).child(user.phone!!)
                             mDbRef.setValue(inputAmount)
-                            eventList.add(billName)
-                            EventRef.child("EventList").setValue(eventList)
+
 
                         }
-                        val intent = Intent(this@CreateBills, Bills::class.java)
-                        finish()
-                        startActivity(intent)
+
                     }
+                    eventList.add(billName)
+                    EventRef.child("EventList").setValue(eventList)
+                    EventRef.child(billName).child("Total").setValue(totalAmount)
+                    val intent = Intent(this@CreateBills, Bills::class.java)
+                    finish()
+                    startActivity(intent)
                 }
 
 
