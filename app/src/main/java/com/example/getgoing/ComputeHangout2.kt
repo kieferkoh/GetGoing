@@ -44,7 +44,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placesClient: PlacesClient
     var totalLongitude: Double = 0.0
     var totalLatitude: Double = 0.0
-    var membersSize: Int = 1
+    var membersSize: Int = 2
     var places: ArrayList<Place>? = ArrayList()
     var nameList: ArrayList<String>? = ArrayList()
 
@@ -93,8 +93,8 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                 mDbRef.child("Groups").child(groupChatID!!).child("chat").push()
                     .setValue(messageObject)
                 createVoteDatabase()
-                val intent = Intent(this,VotingPage::class.java)
-                intent.putExtra("GID",GroupManager.currentGroup?.groupID)
+                val intent = Intent(this, VotingPage::class.java)
+                intent.putExtra("GID", GroupManager.currentGroup?.groupID)
                 finish()
                 startActivity(intent)
             }
@@ -257,6 +257,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     private fun performAutocomplete(query: String) {
         showFriendsLocation()
         GroupManager.places = null
+        places?.clear()
         val averageLocation =
             LatLng(totalLatitude / membersSize, totalLongitude / membersSize)
         Log.d("average11", "average: $averageLocation")
@@ -277,32 +278,45 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
             placesClient.findAutocompletePredictions(request)
                 .addOnSuccessListener { response ->
                     // Handle Autocomplete prediction response
+
+                    var counter = 0 // Counter to keep track of the number of results
                     for (prediction in response.autocompletePredictions) {
+                        if (counter >= 5) {
+                            break
+                        }
                         // Process each prediction
+
                         val placeId = prediction.placeId
                         val placeName = prediction.getPrimaryText(null).toString()
 
                         // Retrieve place details using the Place ID
                         val placeRequest =
-                            FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG,Place.Field.ADDRESS,Place.Field.NAME))
+                            FetchPlaceRequest.newInstance(
+                                placeId,
+                                listOf(Place.Field.LAT_LNG, Place.Field.ADDRESS, Place.Field.NAME)
+                            )
 
                         placesClient.fetchPlace(placeRequest)
                             .addOnSuccessListener { response ->
                                 val place = response.place
                                 places?.add(place)
                                 val latLng = place.latLng
+                                val address = place.address
 
                                 // Display marker on the map
-                                latLng?.let {
+                                if (latLng != null && address!=null) {
+                                    counter++
                                     showFriendsLocation()
                                     mMap.addMarker(
-                                        MarkerOptions().position(it).title(placeName).icon(
+                                        MarkerOptions().position(latLng).title(placeName).icon(
                                             BitmapDescriptorFactory.defaultMarker(
                                                 BitmapDescriptorFactory.HUE_BLUE
                                             )
                                         )
                                     )
+
                                 }
+
                             }
                             .addOnFailureListener { exception ->
                                 // Handle error
@@ -311,6 +325,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                                     "Failed to fetch place details: ${exception.message}"
                                 )
                             }
+
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -324,22 +339,33 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         if (places != null) {
             val groupID = GroupManager.currentGroup?.groupID
             val size = membersSize
+            val addressList: ArrayList<String> = arrayListOf()
             for (place in places!!) {
                 val latLng = place.latLng
-                if (latLng != null) {
+                if (latLng != null && place.address!=null) {
+
+                    Log.d("adress", place.address!!)
                     val latitude = latLng.latitude
                     val longitude = latLng.longitude
+                    val sanitisedAddress = sanitizeAddress(place.address!!.toString())
+                    addressList.add(sanitisedAddress)
+                    Log.d("adress", sanitisedAddress)
 
                     mDbRef.child("Vote").child(groupID!!).child("Size").setValue(size)
-                    val reference = mDbRef.child("Vote").child(groupID).child(place.name!!)
+                    val reference = mDbRef.child("Vote").child(groupID).child(sanitisedAddress)
                     reference.child("Name").setValue(place.name)
-                    reference.child("Address").setValue(place.address)
+                    reference.child("Address").setValue(sanitisedAddress)
                     reference.child("UserList").setValue(arrayListOf(""))
                     reference.child("Latitude").setValue(latitude)
                     reference.child("Longitude").setValue(longitude)
                 }
             }
+            mDbRef.child("Vote").child(groupID!!).child("AddressList").setValue(addressList.toSet().toList())
         }
+    }
+    private fun sanitizeAddress(address: String): String {
+        val regex = Regex("[^A-Za-z0-9, ]")
+        return regex.replace(address, "")
     }
 //    fun getAddressFromLocation(context: Context, latitude: Double, longitude: Double): String? {
 //        val geocoder = Geocoder(context)

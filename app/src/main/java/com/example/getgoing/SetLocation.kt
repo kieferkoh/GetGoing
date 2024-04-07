@@ -77,8 +77,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                 intent = Intent(this, ChatActivity::class.java)
             } else {
                 intent = Intent(this, ProfilePage::class.java)
-                intent.putExtra("placeName",placeNameOut)
-                Log.d("placename",placeNameOut!!)
+                intent.putExtra("placeName",place?.name)
             }
             setLocation(place)
             finish()
@@ -231,7 +230,7 @@ class SetLocation : AppCompatActivity(), OnMapReadyCallback {
                     val placeName = prediction.getPrimaryText(null).toString()
                     placeNameOut = placeName
 
-                    val placeRequest = FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG))
+                    val placeRequest = FetchPlaceRequest.newInstance(placeId, listOf(Place.Field.LAT_LNG,Place.Field.NAME,Place.Field.ADDRESS))
                     placesClient.fetchPlace(placeRequest)
                         .addOnSuccessListener { response ->
                             val searchedPlace = response.place

@@ -1,11 +1,13 @@
 package com.example.getgoing
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -52,6 +54,7 @@ class GroupDisplay : AppCompatActivity() {
             for (id in groupIDs) {
                 mDbRef.child(id)
                     .addValueEventListener(object : ValueEventListener {
+                        @RequiresApi(Build.VERSION_CODES.O)
                         override fun onDataChange(snapshot: DataSnapshot) {
                             Log.d("GroupIDsdisplay", "Group IDs: $id")
                             val groupImage = snapshot.child("image").getValue(Int::class.java)
