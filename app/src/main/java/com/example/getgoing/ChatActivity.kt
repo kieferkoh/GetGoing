@@ -66,8 +66,24 @@ class ChatActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             val activity = DatabaseManager.fetchDataFromFirebase(mDbRef.child("Groups").child(groupChatID!!).child("Activity"), String::class.java)
+            val longitude = DatabaseManager.fetchDataFromFirebase(mDbRef.child("Vote").child(groupChatID).child(activity!!).child("Longitude"),Double::class.java)
+            val latitude = DatabaseManager.fetchDataFromFirebase(mDbRef.child("Vote").child(groupChatID).child(activity).child("Latitude"),Double::class.java)
+
             val hangout = findViewById<TextView>(R.id.hangoutSpot)
             "Hangout : $activity".also { hangout.text = it }
+            hangout.setOnClickListener {
+                if(activity!=null){
+                    val intent = Intent(this@ChatActivity,ComputedHangoutSpot::class.java)
+                    Log.d("activity",activity.toString())
+                    Log.d("latitude",latitude.toString())
+                    Log.d("latitude",longitude.toString())
+                    intent.putExtra("longitude",longitude)
+                    intent.putExtra("latitude", latitude)
+                    finish()
+                    startActivity(intent)
+
+                }
+            }
         }
 
         supportActionBar?.title = name

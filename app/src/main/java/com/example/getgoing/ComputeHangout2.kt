@@ -215,6 +215,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         callback: (ArrayList<LatLng>) -> Unit
     ) {
 
+        membersSize = members.size
         for (member in members) {
             val locationReference = mDbRef.child("User").child(member).child("location")
             var locations = ArrayList<LatLng>()
@@ -235,7 +236,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                         locations.add(location)
 
                         if (locations.size == members.size) {
-                            membersSize = members.size + 1
+
                             callback(locations)
 
                         }
@@ -264,8 +265,8 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         averageLocation.let { location ->
             // Only proceed if averageLocation is not null
             val bias = RectangularBounds.newInstance(
-                LatLng(location.latitude - 0.01, location.longitude - 0.01),
-                LatLng(location.latitude + 0.01, location.longitude + 0.01)
+                LatLng(location.latitude - 0.001, location.longitude - 0.001),
+                LatLng(location.latitude + 0.001, location.longitude + 0.001)
             )
 
             val request = FindAutocompletePredictionsRequest.builder()

@@ -13,4 +13,5 @@
     <string name="Map_API_KEY">AIzaSyArqw2k4HhUxuSDjQY5E4UUegMI2WvzmQY</string>
     <string name="title_activity_set_location">SetLocation</string>
     <string name="title_activity_compute_hangout">ComputeHangout</string>
+    <string name="title_activity_computed_hangout_spot">ComputedHangoutSpot</string>
 </resources>
