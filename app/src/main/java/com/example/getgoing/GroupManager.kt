@@ -14,6 +14,7 @@ object GroupManager {
         val dbRefGrp = mDbRef.child("Groups").child(gid)
         currentGroup = Group(name, members, gid)
         DatabaseManager.createDataFirebase(Group(name, members, gid), dbRefGrp)
+        DatabaseManager.createDataFirebase("", dbRefGrp.child("Activity"))
         members.forEach {
             val dbRefMember = mDbRef.child("User").child(it).child("groups")
             DatabaseManager.createOrUpdateListFirebase(gid, dbRefMember, String::class.java)

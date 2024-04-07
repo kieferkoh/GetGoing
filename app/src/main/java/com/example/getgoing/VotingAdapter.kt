@@ -84,7 +84,7 @@ class VotingAdapter(
 
             }
             if (item.userList?.size == totalMembers){
-                votingPage.closeVoting(item)
+                votingPage.closeVoting(item, GID)
             }
         }
     }

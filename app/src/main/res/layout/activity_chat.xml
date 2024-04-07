@@ -14,6 +14,26 @@
 
 
     <!--on below line we are creating a recycler view-->
+
+    <TextView
+        android:id="@+id/hangoutSpot"
+        android:layout_width="383dp"
+        android:layout_height="39dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Hangout: "
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.093" />
+
     <ImageButton
         android:id="@+id/backToListOfGroups"
         android:layout_width="40dp"
@@ -55,10 +75,12 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.011" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -66,10 +88,10 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/messageBox"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idTVHeading"
+        app:layout_constraintTop_toBottomOf="@+id/hangoutSpot"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText

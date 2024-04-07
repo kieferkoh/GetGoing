@@ -59,14 +59,15 @@ class GroupDisplay : AppCompatActivity() {
                             Log.d("GroupIDsdisplay", "Group IDs: $id")
                             val groupImage = snapshot.child("image").getValue(Int::class.java)
                             val groupName = snapshot.child("name").getValue(String::class.java)
+                            if (id != " ") {
+                                groupList.add(Group(id, groupImage, groupName))
+                                GroupDisplayAdapter = GroupDisplayAdapter(groupList)
+                                groupChatRecyclerView.adapter = GroupDisplayAdapter
+                                groupChatRecyclerView.layoutManager =
+                                    LinearLayoutManager(this@GroupDisplay)
 
-                            groupList.add(Group(id, groupImage, groupName))
-                            GroupDisplayAdapter = GroupDisplayAdapter(groupList)
-                            groupChatRecyclerView.adapter = GroupDisplayAdapter
-                            groupChatRecyclerView.layoutManager =
-                                LinearLayoutManager(this@GroupDisplay)
-
-                            GroupDisplayAdapter.notifyDataSetChanged()
+                                GroupDisplayAdapter.notifyDataSetChanged()
+                            }
                         }
 
                         override fun onCancelled(error: DatabaseError) {
