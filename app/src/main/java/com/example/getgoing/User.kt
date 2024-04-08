@@ -24,7 +24,7 @@ class User {
         this.name = name
         this.phone = phone
         this.password = password
-        this.image = R.drawable.roy
+        this.image = R.drawable.baseline_account_circle_24
         this.friends = arrayListOf(" ")
         this.location = DefaultLocation()
         this.groups = arrayListOf(" ")

@@ -52,6 +52,10 @@ class SignUp : AppCompatActivity() {
             val confirm = edtConfirmPass.text.toString()
             val name = edtName.text.toString()
 
+            if (phone.length != 8){
+                Toast.makeText(this, "Please enter a valid 8 digit phone number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (phone.isEmpty() || name.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -83,7 +87,7 @@ class SignUp : AppCompatActivity() {
                     }
                 }
                 if (exist==1){
-                    //Toast.makeText(this@SignUp, "User Exists", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUp, "Phone number in use", Toast.LENGTH_SHORT).show()
                     }
                 else {
 

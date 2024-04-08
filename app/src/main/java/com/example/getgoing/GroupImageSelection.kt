@@ -34,42 +34,42 @@ class GroupImageSelection : AppCompatActivity() {
 
         val avatar1 = findViewById<ImageButton>(R.id.profilePT1)
         avatar1.setOnClickListener{
-            setGroupPicture(R.drawable.avatar1)
+            setGroupPicture(R.drawable.groupavatar1)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()
         }
         val avatar2 = findViewById<ImageButton>(R.id.profilePT2)
         avatar2.setOnClickListener{
-            setGroupPicture(R.drawable.avatar2)
+            setGroupPicture(R.drawable.groupavatar2)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()
         }
         val avatar3 = findViewById<ImageButton>(R.id.profilePT3)
         avatar3.setOnClickListener{
-            setGroupPicture(R.drawable.avatar3)
+            setGroupPicture(R.drawable.groupavatar3)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()
         }
         val avatar4 = findViewById<ImageButton>(R.id.profilePT4)
         avatar4.setOnClickListener{
-            setGroupPicture(R.drawable.avatar4)
+            setGroupPicture(R.drawable.groupavatar4)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()
         }
         val avatar5 = findViewById<ImageButton>(R.id.profilePT5)
         avatar5.setOnClickListener{
-            setGroupPicture(R.drawable.avatar5)
+            setGroupPicture(R.drawable.groupavatar5)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()
         }
         val avatar6 = findViewById<ImageButton>(R.id.profilePT6)
         avatar6.setOnClickListener{
-            setGroupPicture(R.drawable.avatar7)
+            setGroupPicture(R.drawable.groupavatar6)
             val intent = Intent(this, GroupProfile::class.java)
             startActivity(intent)
             finish()

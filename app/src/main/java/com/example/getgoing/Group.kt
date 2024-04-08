@@ -35,7 +35,7 @@ class Group {
         this.name = name
         this.members = members
         this.groupID = groupID
-        this.image = R.drawable.roy
+        this.image = R.drawable.baseline_account_circle_24
         this.chat = arrayListOf(Message(" ","0"))
     }
     @RequiresApi(Build.VERSION_CODES.O)
