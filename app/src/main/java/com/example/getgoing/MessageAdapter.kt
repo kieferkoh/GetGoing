@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
         val receiveMessage = itemView.findViewById<TextView>(R.id.txt_receive_message)
         val timeNow = itemView.findViewById<TextView>(R.id.text_gchat_timestamp_other)
         val name = itemView.findViewById<TextView>(R.id.text_gchat_user_other)
+        val image = itemView.findViewById<ImageView>(R.id.image_gchat_profile_other)
     }
 
     class EmptyViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -102,6 +104,8 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
             CoroutineScope(Dispatchers.Main).launch {
                 val name = getName(currentMessage.senderId!!)
                 (holder as? ReceiveViewHolder)?.name?.text = name
+                val image = getImage(currentMessage.senderId!!)
+                (holder as? ReceiveViewHolder)?.image?.setImageResource(image!!)
             }
         }
     }
@@ -122,6 +126,12 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
     private suspend fun getName(phone: String): String? {
         return withContext(Dispatchers.Main) {
             CurrentUserManager.getName(phone)
+        }
+    }
+
+    private suspend fun getImage(phone: String): Int? {
+        return withContext(Dispatchers.Main) {
+            CurrentUserManager.getUserByPhone(phone)?.image
         }
     }
 }

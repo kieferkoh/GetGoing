@@ -42,7 +42,7 @@ class GroupEdit : AppCompatActivity() {
 
 
         okBtn.setOnClickListener {
-            if (edtChangeGroupName.text.toString() != null) {
+            if (edtChangeGroupName.text.toString() != "") {
                 var myGroup = GroupManager.currentGroup
 
                 mDbRef.child("Groups").child(myGroup?.groupID!!).child("name")
