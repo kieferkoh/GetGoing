@@ -52,6 +52,7 @@ class CreateGroupName : AppCompatActivity() {
                 addGroupToDatabase(edtGroupName.text.toString())
 
                 val intent = Intent(this, CreateGroupFriends::class.java)
+                intent.putExtra("From","createGroup")
                 finish()
                 startActivity(intent)
             }

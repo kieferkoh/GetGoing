@@ -48,6 +48,7 @@ class GroupProfile : AppCompatActivity() {
 
         addMemberGroupProfile.setOnClickListener {
             val intent = Intent(this@GroupProfile, CreateGroupFriends::class.java)
+            intent.putExtra("From","profile")
             startActivity(intent)
         }
 

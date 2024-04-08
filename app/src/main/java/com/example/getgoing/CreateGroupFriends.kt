@@ -56,9 +56,16 @@ class CreateGroupFriends : AppCompatActivity() {
 
         val backBtn = findViewById<Button>(R.id.cancelToGroupsPage)
         backBtn.setOnClickListener {
-            val intent = Intent(this, CreateGroupName::class.java)
-            startActivity(intent)
-            finish()
+            val from = intent.getStringExtra("From")
+            if(from == "createGroup"){
+                val intent = Intent(this, CreateGroupName::class.java)
+                startActivity(intent)
+                finish()}
+            else{
+                val intent = Intent(this, GroupProfile::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         CoroutineScope(Dispatchers.Main).launch {
