@@ -22,6 +22,7 @@ class GroupProfile : AppCompatActivity() {
     private lateinit var leaveGroup: Button
     private lateinit var groupNameTitle: TextView
     private lateinit var groupNameBanner: TextView
+    private lateinit var groupDP: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +43,7 @@ class GroupProfile : AppCompatActivity() {
         groupNameBanner = findViewById(R.id.group_name_group_profile)
         groupNameTitle = findViewById(R.id.GroupProfileTitle)
         leaveGroup = findViewById(R.id.leaveGroup)
+        groupDP = findViewById(R.id.setGroupDP)
 
         groupNameTitle.setText(GroupManager.currentGroup?.name)
         groupNameBanner.setText(GroupManager.currentGroup?.name)
@@ -66,7 +68,14 @@ class GroupProfile : AppCompatActivity() {
                 GroupManager.delMembers(id!!, arrayListOf(user!!))
                 val intent = Intent(this@GroupProfile,GroupDisplay::class.java)
                 startActivity(intent)
+            }
         }
-    }
+        groupDP.setImageResource(GroupManager.currentGroup?.image!!)
+        groupDP.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                val intent = Intent(this@GroupProfile, GroupImageSelection::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

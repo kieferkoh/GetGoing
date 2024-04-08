@@ -1,5 +1,7 @@
 package com.example.getgoing
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.android.libraries.places.api.model.Place
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -9,6 +11,7 @@ object GroupManager {
     private val mDbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
     var currentGroup: Group? = null
     var places: ArrayList<Place>? = null
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun createGroup(name: String, members: ArrayList<String>) : Boolean {
         val gid = UUID.randomUUID().toString()
         val dbRefGrp = mDbRef.child("Groups").child(gid)
@@ -51,5 +54,10 @@ object GroupManager {
                 ?.let { group -> groupList.add(group) }
         }
         return groupList
+    }
+
+    suspend fun setGroupDP(image: Int) {
+        DatabaseManager.createDataFirebase(image, mDbRef.child("Groups").child(currentGroup?.groupID!!).child("image"))
+        currentGroup?.image = image
     }
 }

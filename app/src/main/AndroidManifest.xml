@@ -110,6 +110,9 @@
         <activity
             android:name=".VotingPage"
             android:exported="false" />
+        <activity
+            android:name=".GroupImageSelection"
+            android:exported="false" />
     </application>
 
 </manifest>
