@@ -58,6 +58,7 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         mDbRef = FirebaseDatabase.getInstance().getReference()
         binding = ActivityComputeHangout2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
