@@ -81,15 +81,17 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
         // Start Vote
 
         findViewById<Button>(R.id.startVoteButton).setOnClickListener {
-            if (places == null) {
+            if (places!!.isEmpty()) {
                 Toast.makeText(this, "Input an activity first", Toast.LENGTH_SHORT).show()
             } else {
+
                 GroupManager.places = places
                 val senderUid = "Voting"
                 val groupChatID = GroupManager.currentGroup?.groupID
                 val message = "Vote for Hangout Spot Here!!"
                 val messageObject = Message(message, senderUid, true)
-                mDbRef.child("Groups").child(groupChatID!!).child("chat").push()
+                mDbRef.child("Vote").child(groupChatID!!).setValue(arrayListOf(""))
+                mDbRef.child("Groups").child(groupChatID).child("chat").push()
                     .setValue(messageObject)
                 createVoteDatabase()
                 val intent = Intent(this, VotingPage::class.java)
@@ -216,6 +218,8 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
     ) {
 
         membersSize = members.size
+        totalLatitude = 0.0
+        totalLongitude = 0.0
         for (member in members) {
             val locationReference = mDbRef.child("User").child(member).child("location")
             var locations = ArrayList<LatLng>()
@@ -306,7 +310,6 @@ class ComputeHangout2 : AppCompatActivity(), OnMapReadyCallback {
                                 // Display marker on the map
                                 if (latLng != null && address!=null) {
                                     counter++
-                                    showFriendsLocation()
                                     mMap.addMarker(
                                         MarkerOptions().position(latLng).title(placeName).icon(
                                             BitmapDescriptorFactory.defaultMarker(
