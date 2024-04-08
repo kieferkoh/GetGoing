@@ -3,13 +3,10 @@ package com.example.getgoing
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -37,9 +34,14 @@ class FriendsAdd : AppCompatActivity() {
         val addBtn = findViewById<Button>(R.id.addFriendButton)
         addBtn.setOnClickListener {
         CoroutineScope(Dispatchers.Main).launch {
+            if (CurrentUserManager.getUserByPhone(editText.text.toString()) != null){
                 sendFriendRequest(editText.text.toString())
             }
-        }
+            else {
+                Toast.makeText(this@FriendsAdd, "User does not exist", Toast.LENGTH_SHORT).show()
+            }
+          }
+         }
         }
     private suspend fun sendFriendRequest(phone: String?) {
         if (phone != null) {
