@@ -17,13 +17,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SignUp : AppCompatActivity() {
+class ForgetPassword : AppCompatActivity() {
 
     private lateinit var edtPhone: EditText
     private lateinit var edtPassword: EditText
     private lateinit var edtName: EditText
     private lateinit var edtConfirmPass: EditText
-    private lateinit var btnSignUp: Button
+    private lateinit var btnDone: Button
     private lateinit var btnBack: ImageButton
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
@@ -33,7 +33,7 @@ class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_forget_password)
         supportActionBar?.hide()
 
         mAuth = FirebaseAuth.getInstance()
@@ -43,64 +43,58 @@ class SignUp : AppCompatActivity() {
         edtConfirmPass = findViewById(R.id.edt_confirm_pass)
         edtName = findViewById(R.id.edt_name)
         btnBack = findViewById(R.id.backToLoginPage)
-        btnSignUp = findViewById(R.id.edt_btnSignUp)
-
+        btnDone = findViewById(R.id.edt_btnDone)
 
         btnBack.setOnClickListener {
             val intent = Intent(this, LogIn::class.java)
             finish()
             startActivity(intent)
         }
-        btnSignUp.setOnClickListener {
+
+        btnDone.setOnClickListener {
             val phone = edtPhone.text.toString()
             val password = edtPassword.text.toString()
             val confirm = edtConfirmPass.text.toString()
             val name = edtName.text.toString()
 
-            if (phone.length != 8){
-                Toast.makeText(this, "Please enter a valid 8 digit phone number", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (phone.isEmpty() || name.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            CoroutineScope(Dispatchers.Main).launch {
+                if (phone.isEmpty() || name.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
+                    Toast.makeText(this@ForgetPassword, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                if (CurrentUserManager.getUserByPhone(phone) == null) {
+                    Toast.makeText(
+                        this@ForgetPassword,
+                        "User does not exist",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@launch
+                }
+                else {
+                    if (CurrentUserManager.getUserByPhone(phone)?.name != name){
+                        Toast.makeText(
+                            this@ForgetPassword,
+                            "Name does not match user",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@launch
+                    }
 
-            if (password != confirm) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+                }
+                if (password != confirm) {
+                    Toast.makeText(this@ForgetPassword, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
 
-            signup(name, phone, password)
-        }
-
-    }
-
-    private fun signup(name: String, phone: String, password: String) {
-        // Get a reference to the "User" node in the database
-        mDbRef = FirebaseDatabase.getInstance().getReference()
-        // Check if the phone number already exists in the database
-        CoroutineScope(Dispatchers.Main).launch {
-            if (CurrentUserManager.getUserByPhone(phone) == null) {
-                addUserToDatabase(name, phone, password)
-                val intent = Intent(this@SignUp, MainScreen::class.java)
+                DatabaseManager.createDataFirebase(password, mDbRef.child("User").child(phone).child("password"))
+                val intent = Intent(this@ForgetPassword, LogIn::class.java)
                 finish()
                 startActivity(intent)
             }
-            else {
-                Toast.makeText(this@SignUp, "Phone number in use", Toast.LENGTH_SHORT).show()
-            }
+
+
         }
+
     }
-
-    private fun addUserToDatabase(name: String, phone: String, password: String){
-        val newUser = User(name,phone,password)
-        CurrentUserManager.currentUser = newUser
-        mDbRef.child("User").child(phone).setValue(newUser)
-    }
-
-
-
-
 }
 
