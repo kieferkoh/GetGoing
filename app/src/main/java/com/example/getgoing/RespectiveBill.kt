@@ -3,6 +3,7 @@ package com.example.getgoing
 import RespectiveBillDisplayAdapter
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +24,7 @@ class RespectiveBill : AppCompatActivity() {
     private lateinit var memberRecyclerView: RecyclerView
     private lateinit var RespectiveBillDisplayAdapter: RespectiveBillDisplayAdapter
     private lateinit var membersRef: DatabaseReference
+    private lateinit var mDbRef: DatabaseReference
     private lateinit var memberList: ArrayList<User>
 
 
@@ -42,6 +44,14 @@ class RespectiveBill : AppCompatActivity() {
 
         val backBtn = findViewById<ImageButton>(R.id.backToBills)
         backBtn.setOnClickListener {
+            intent= Intent(this,Bills::class.java)
+            finish()
+            startActivity(intent)
+        }
+        val deleteBtn = findViewById<Button>(R.id.deleteBill)
+        deleteBtn.setOnClickListener {
+            mDbRef = FirebaseDatabase.getInstance().getReference()
+            mDbRef.child("Bills").child(groupID!!).child(eventName!!).removeValue()
             intent= Intent(this,Bills::class.java)
             finish()
             startActivity(intent)

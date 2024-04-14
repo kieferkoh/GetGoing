@@ -1,12 +1,14 @@
 package com.example.getgoing
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,6 +24,7 @@ class CreateGroupName : AppCompatActivity() {
     private lateinit var backBtn: ImageButton
 
     private lateinit var mDbRef: DatabaseReference
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,6 +63,7 @@ class CreateGroupName : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addGroupToDatabase(name: String?) {
         var currentUser = CurrentUserManager.currentUser
         if (currentUser != null) {
